@@ -6,12 +6,21 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate:dev": "dotenv -e .env.dev -- npx prisma migrate dev",
+    "db:push": "dotenv -e .env.dev -- npx prisma db push",
+    "db:pull": "dotenv -e .env.dev -- npx prisma db pull",
+    "migrate:reset": "dotenv -e .env.dev -- npx prisma migrate reset",
+    "db:seed": "dotenv -e .env.dev -- npx prisma db seed",
+    "prisma:generate": "dotenv -e .env.dev -- npx prisma generate",
+    "prisma:studio": "dotenv -e .env.dev -- npx prisma studio",
+    "production:build": "npx prisma generate && npx prisma migrate deploy && next build"
   },
   "dependencies": {
     "@prisma/client": "^5.13.0",
     "@tanstack/react-query": "^5.35.1",
     "@tanstack/react-query-devtools": "^5.35.1",
+    "dotenv-cli": "^7.4.2",
     "next": "14.2.3",
     "prisma": "^5.13.0",
     "react": "^18",
