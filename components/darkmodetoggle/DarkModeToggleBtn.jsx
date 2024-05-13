@@ -5,7 +5,7 @@ import { IoMoonSharp } from 'react-icons/io5';
 function DarkModeToggleBtn() {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   return (
-    <button onClick={toggleDarkMode}>
+    <button onClick={toggleDarkMode} className='inline'>
       {isDarkMode ? <IoMoonSharp /> : <FiSun />}
     </button>
   );

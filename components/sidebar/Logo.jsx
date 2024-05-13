@@ -12,7 +12,7 @@ function Logo() {
           width={0}
           height={0}
           sizes='100vw'
-          className='w-full h-full object-contain'
+          className='w-full h-full object-contain absolute left-0 top-0'
         />
       </Link>
     </div>

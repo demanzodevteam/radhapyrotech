@@ -1,12 +1,27 @@
 import Navlink from './Navlink';
-
+import { BsHouseDashFill } from 'react-icons/bs';
+import { TbCategoryPlus } from 'react-icons/tb';
+import { FaLayerGroup } from 'react-icons/fa6';
+import { FaUsersGear } from 'react-icons/fa6';
+import { FaCalendarAlt } from 'react-icons/fa';
 function NavMenus() {
   return (
-    <ul className='flex flex-col gap-8'>
-      <Navlink href='/dashboard/categories'>Categories</Navlink>
-      <Navlink href='/dashboard/products'>Products</Navlink>
-      <Navlink href='/dashboard/orders'>Orders</Navlink>
-      <Navlink href='/dashboard/users'>Users</Navlink>
+    <ul className='flex flex-col gap-8 dark:text-white'>
+      <Navlink icon={<BsHouseDashFill />} href='/dashboard'>
+        Dashboard
+      </Navlink>
+      <Navlink icon={<TbCategoryPlus />} href='/dashboard/categories'>
+        Categories
+      </Navlink>
+      <Navlink icon={<FaLayerGroup />} href='/dashboard/products'>
+        Products
+      </Navlink>
+      <Navlink icon={<FaCalendarAlt />} href='/dashboard/orders'>
+        Orders
+      </Navlink>
+      <Navlink icon={<FaUsersGear />} href='/dashboard/users'>
+        Users
+      </Navlink>
     </ul>
   );
 }

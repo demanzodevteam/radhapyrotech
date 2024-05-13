@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body
         suppressHydrationWarning={true}
-        className={`${nunitoSans.variable} ${nunitoSans.className}`}
+        className={`${nunitoSans.variable} ${nunitoSans.className} text-gray-800 dark:text-white`}
       >
         <DarkModeProvider>
           <TanstackProvider>{children}</TanstackProvider>
