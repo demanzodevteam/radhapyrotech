@@ -4,12 +4,12 @@ import { queryKeys } from '@/tanstack_provider/queryKeys';
 import { useQuery } from '@tanstack/react-query';
 
 function useProducts() {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [queryKeys.products],
     queryFn: getProducts,
   });
 
-  return { data };
+  return { data, isLoading };
 }
 
 export { useProducts };

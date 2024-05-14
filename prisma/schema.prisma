@@ -11,8 +11,8 @@ model Product {
   id                    Int            @id @default(autoincrement())
   product_code          Int            @unique
   product_name          String
-  product_piece         String
-  product_box           String
+  product_piece         Int
+  product_box           Int
   product_reqular_price Float
   product_selling_price Float
   product_image         String?

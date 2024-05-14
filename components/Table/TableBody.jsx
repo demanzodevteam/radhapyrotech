@@ -1,16 +1,8 @@
-'use client';
-import { useProducts } from '@/hooks/products/useProducts';
-import { TableRow } from './TableRow';
+import { NotFound } from '@/components';
 
-function TableBody() {
-  const { data: products = [] } = useProducts();
-  return (
-    <tbody className='py-4'>
-      {products?.map((product) => (
-        <TableRow key={product.id} data={product} />
-      ))}
-    </tbody>
-  );
+function TableBody({ data, render }) {
+  if (!data.length) return <NotFound />;
+  return <tbody className='py-4'>{data?.map(render)}</tbody>;
 }
 
-export default TableBody;
+export { TableBody };
