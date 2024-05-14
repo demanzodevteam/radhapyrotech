@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 
-export default function Modal({ isVisible, children, onClose, className }) {
+const Modal = ({ isVisible, children, onClose, className }) => {
   const [modalVisible, setModalVisible] = useState(isVisible);
 
   const closeModal = () => {
@@ -22,4 +22,6 @@ export default function Modal({ isVisible, children, onClose, className }) {
       </div>
     </div>
   );
-}
+};
+
+export { Modal };

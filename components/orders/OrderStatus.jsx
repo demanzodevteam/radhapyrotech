@@ -1,5 +1,5 @@
 "use client";
-import { orders_status } from "@prisma/client";
+
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -53,4 +53,4 @@ const OrderStatus = ({ order }) => {
   );
 };
 
-export default OrderStatus;
+export { OrderStatus };

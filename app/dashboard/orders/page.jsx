@@ -1,12 +1,19 @@
 "use client";
 import { IoMdOpen } from "react-icons/io";
-import OrderStatus from "@/components/OrderStatus";
+import { OrderStatus } from "@/components/orders/OrderStatus";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import Modal from "@/app/__Components/Modal";
+import { Modal } from "@/components/modal/Modal";
+import { formatDate } from "@/services/dateFormatter/dateformatter";
+import { Invoice } from "@/components/orders/Invoice";
 
-export default function Home() {
-  const [modalData, setModalData] = useState({
+export default function Orders() {
+  const [invoiceData, setInvoiceData] = useState({
+    isVisible: false,
+    order: {},
+    z: 20,
+  });
+  const [productData, setProductData] = useState({
     isVisible: false,
     products: [],
     z: 20,
@@ -28,8 +35,8 @@ export default function Home() {
   };
 
   const showProducts = (products, totalPrice) => {
-    setModalData({
-      ...modalData,
+    setProductData({
+      ...productData,
       isVisible: true,
       products: products,
       z: 0,
@@ -38,11 +45,28 @@ export default function Home() {
   };
 
   const CloseProducts = () => {
-    setModalData({
+    setProductData({
       isVisible: false,
       products: [],
       z: 20,
       totalPrice: 0,
+    });
+  };
+  const showInvoice = (order) => {
+    setInvoiceData({
+      ...invoiceData,
+      isVisible: true,
+      order: order,
+      z: 0,
+    });
+  };
+
+  const closeInvoice = () => {
+    setInvoiceData({
+      ...invoiceData,
+      isVisible: false,
+      order: {},
+      z: 20,
     });
   };
 
@@ -81,14 +105,10 @@ export default function Home() {
   });
 
   // console.log(`data: ${JSON.stringify(orders)}`);
-  const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "short", day: "numeric" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
 
   return (
     <div className="relative">
-      <div className={modalData.z === 0 ? `z-0` : "z-20"}>
+      <div className={productData.z === 0 ? `z-0` : "z-20"}>
         <div>
           <div className="flex gap-8 pb-6">
             <div className="col-auto">
@@ -193,11 +213,14 @@ export default function Home() {
                     <td className="mx-4 py-2 text-xs">
                       <button
                         onClick={() => {
-                          showProducts(order.order_products, order.total_price);
+                          showProducts(
+                            order.ordered_products,
+                            order.total_price
+                          );
                         }}
                       >
                         <div className="flex gap-2 items-center">
-                          {order.order_products[0]?.product?.product_name}
+                          {order.ordered_products[0]?.product_name}
                           <IoMdOpen />
                         </div>
                       </button>
@@ -210,7 +233,17 @@ export default function Home() {
                         order={{ id: order.id, status: order.status }}
                       />
                     </td>
-                    <td className="mx-4 py-2 text-xs">Invoice</td>
+                    <td className="mx-4 py-2 text-xs">
+                      <button
+                        onClick={() => {
+                          showInvoice(order);
+                        }}
+                      >
+                        <div>
+                          Show Invoice <IoMdOpen />
+                        </div>
+                      </button>
+                    </td>
                   </tr>
                 );
               })}
@@ -219,15 +252,15 @@ export default function Home() {
         </div>
       </div>
       <div
-        className={` absolute top-0 z-10 flex items-center justify-center w-full h-product-modal backdrop-blur-sm bg-white/30  ${
-          modalData.isVisible ? "block" : "hidden"
+        className={` absolute top-0 z-10 flex justify-center w-full h-full backdrop-blur-sm bg-white/30  ${
+          productData.isVisible ? "block" : "hidden"
         }`}
         onClick={CloseProducts}
       >
         <Modal
-          isVisible={modalData.isVisible}
+          isVisible={productData.isVisible}
           onClose={CloseProducts}
-          className={"bg-white rounded-md w-5/6"}
+          className={"bg-white rounded-md w-5/6 h-fit sticky"}
         >
           <div className="">
             <h4 className="text-center pb-8">Products</h4>
@@ -245,23 +278,23 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                {modalData.products?.map((product, index) => {
+                {productData.products?.map((product, index) => {
                   return (
-                    <tr key={product.id} className="py-2 border-t-2">
+                    <tr key={index} className="py-2 border-t-2">
                       <td className="mx-4 py-2 text-xs ">{index + 1}</td>
                       <td className="mx-4 py-2 text-xs ">
-                        {product?.product?.product_code}
+                        {product?.product_code}
                       </td>
                       <td className="mx-4 py-2 text-xs ">
-                        {product?.product?.product_name}
+                        {product?.product_name}
                       </td>
                       <td className="mx-4 py-2 text-xs">
-                        {product?.product?.product_selling_price}
+                        {product?.product_selling_price}
                       </td>
                       <td className="mx-4 py-2 text-xs">{product?.quantity}</td>
                       <td className="mx-4 py-2 text-xs">
                         {Number(product?.quantity) *
-                          Number(product?.product?.product_selling_price)}
+                          Number(product?.product_selling_price)}
                       </td>
                     </tr>
                   );
@@ -269,9 +302,23 @@ export default function Home() {
               </tbody>
             </table>
             <h2 className="text-center mt-14">
-              Total Price : {modalData.totalPrice}{" "}
+              Total Price : {productData.totalPrice}
             </h2>
           </div>
+        </Modal>
+      </div>
+      <div
+        className={` absolute top-0 z-10 flex justify-center w-full h-full backdrop-blur-sm bg-white/30  ${
+          invoiceData.isVisible ? "block" : "hidden"
+        }`}
+        onClick={closeInvoice}
+      >
+        <Modal
+          isVisible={invoiceData.isVisible}
+          onClose={closeInvoice}
+          className={"bg-white rounded-md w-5/6 h-fit sticky"}
+        >
+          <Invoice order={invoiceData.order} />
         </Modal>
       </div>
     </div>

@@ -26,6 +26,7 @@ export async function GET(request) {
         customer_name: search
           ? {
               startsWith: search,
+              mode: "insensitive",
             }
           : undefined,
         status: status ? { equals: status } : undefined,
@@ -34,13 +35,7 @@ export async function GET(request) {
           { order_date: endDate ? { lte: new Date(endDate) } : undefined },
         ],
       },
-      include: {
-        order_products: {
-          include: {
-            product: true,
-          },
-        },
-      },
+
       orderBy: {
         order_date: "desc",
       },
@@ -48,7 +43,7 @@ export async function GET(request) {
 
     // const orders = await prisma.Order.findMany();
 
-    console.log("orders: " + JSON.stringify(orders));
+    // console.log("orders: " + JSON.stringify(orders));
     return NextResponse.json(orders, {
       headers: {
         "Content-Type": "application/json",

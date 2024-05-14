@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("NEXT_PUBLIC_DATABASE_URL")
 }
 
@@ -17,7 +17,6 @@ model Product {
   product_selling_price Float
   product_image         String?
   product_status        Boolean        @default(true)
-  orders                OrderProduct[]
   product_categories    Category[]     @relation("CategoryToProduct")
 }
 
@@ -41,17 +40,18 @@ model Order {
   order_date       DateTime       @default(now())
   total_price      Decimal        @db.Decimal(10, 2)
   status           OrderStatus    @default(pending)
-  order_products   OrderProduct[]
+  ordered_products OrderedProduct[]
+}
+model OrderedProduct {
+  id                Int      @id @default(autoincrement())
+  product_code      Int
+  product_name      String
+  product_selling_price Float
+  quantity          Int
+  order             Order    @relation(fields: [orderId], references: [id])
+  orderId           Int
 }
 
-model OrderProduct {
-  id        Int     @id @default(autoincrement())
-  orderId   Int
-  productId Int
-  quantity  Int
-  order     Order   @relation(fields: [orderId], references: [id])
-  product   Product @relation(fields: [productId], references: [id])
-}
 
 enum OrderStatus {
   pending
