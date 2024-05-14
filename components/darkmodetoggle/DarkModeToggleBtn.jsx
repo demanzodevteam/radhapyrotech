@@ -1,13 +1,25 @@
 'use client';
 import useDarkMode from '@/darkmodecontext/useDarkMode';
+import { useEffect, useState } from 'react';
 import { FiSun } from 'react-icons/fi';
 import { IoMoonSharp } from 'react-icons/io5';
 function DarkModeToggleBtn() {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
-    <button onClick={toggleDarkMode} className='inline'>
-      {isDarkMode ? <IoMoonSharp /> : <FiSun />}
-    </button>
+    <>
+      {isClient && (
+        <button onClick={toggleDarkMode} className='inline'>
+          {isDarkMode ? <IoMoonSharp /> : <FiSun />}
+        </button>
+      )}
+    </>
   );
 }
 
