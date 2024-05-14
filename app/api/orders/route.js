@@ -37,8 +37,10 @@ export async function GET(request) {
       },
 
       orderBy: {
-        order_date: "desc",
+        id: "desc",
       },
+      skip: 0,
+      take: 10,
     });
 
     // const orders = await prisma.Order.findMany();

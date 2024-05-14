@@ -65,7 +65,6 @@ export default function Orders() {
     setInvoiceData({
       ...invoiceData,
       isVisible: false,
-      order: {},
       z: 20,
     });
   };
@@ -107,14 +106,14 @@ export default function Orders() {
   // console.log(`data: ${JSON.stringify(orders)}`);
 
   return (
-    <div className="relative">
-      <div className={productData.z === 0 ? `z-0` : "z-20"}>
+    <div className="relative ">
+      <div className={`absolute pb-0${productData.z === 0 ? "z-0 " : "z-20"}`}>
         <div>
           <div className="flex gap-8 pb-6">
             <div className="col-auto">
               <input
                 type="text"
-                className=" border-2 focus:outline-none rounded-md px-4 py-2"
+                className="border-2 focus:outline-none rounded-md px-4 py-2"
                 placeholder="Search By Name"
                 onChange={handleChange}
                 name="search"
@@ -239,7 +238,7 @@ export default function Orders() {
                           showInvoice(order);
                         }}
                       >
-                        <div>
+                        <div className="flex gap-2 items-center">
                           Show Invoice <IoMdOpen />
                         </div>
                       </button>
@@ -252,7 +251,7 @@ export default function Orders() {
         </div>
       </div>
       <div
-        className={` absolute top-0 z-10 flex justify-center w-full h-full backdrop-blur-sm bg-white/30  ${
+        className={`relative top-[-4rem] z-30 flex justify-center items-center w-full backdrop-blur-sm bg-white/30  py-24 ${
           productData.isVisible ? "block" : "hidden"
         }`}
         onClick={CloseProducts}
@@ -260,7 +259,7 @@ export default function Orders() {
         <Modal
           isVisible={productData.isVisible}
           onClose={CloseProducts}
-          className={"bg-white rounded-md w-5/6 h-fit sticky"}
+          className={"bg-white rounded-md w-5/6 h-fit static shadow-2xl"}
         >
           <div className="">
             <h4 className="text-center pb-8">Products</h4>
@@ -280,7 +279,7 @@ export default function Orders() {
               <tbody>
                 {productData.products?.map((product, index) => {
                   return (
-                    <tr key={index} className="py-2 border-t-2">
+                    <tr key={index} className="py-2 border-y-2">
                       <td className="mx-4 py-2 text-xs ">{index + 1}</td>
                       <td className="mx-4 py-2 text-xs ">
                         {product?.product_code}
@@ -308,7 +307,7 @@ export default function Orders() {
         </Modal>
       </div>
       <div
-        className={` absolute top-0 z-10 flex justify-center w-full h-full backdrop-blur-sm bg-white/30  ${
+        className={`relative top-[-5rem] z-30 flex justify-center w-full h-fit backdrop-blur-sm bg-white/30 py-24 ${
           invoiceData.isVisible ? "block" : "hidden"
         }`}
         onClick={closeInvoice}
@@ -316,7 +315,7 @@ export default function Orders() {
         <Modal
           isVisible={invoiceData.isVisible}
           onClose={closeInvoice}
-          className={"bg-white rounded-md w-5/6 h-fit sticky"}
+          className={"bg-white rounded-md w-5/6 h-fit shadow-2xl"}
         >
           <Invoice order={invoiceData.order} />
         </Modal>

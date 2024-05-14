@@ -13,7 +13,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         "24/1fr": "16rem 1fr",
-        '15/1fr': '15rem 1fr',
+        "15/1fr": "15rem 1fr",
       },
       gridTemplateRows: {
         "auto/1fr": "auto 1fr",
