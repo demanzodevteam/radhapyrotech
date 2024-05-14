@@ -10,22 +10,38 @@ function TableRow({ data }) {
     product_image,
     product_status,
   } = data ?? {};
-  console.log(data);
+  // console.log(data);
   return (
-    <div
-      className={`grid grid-cols-[2.5rem_2.5rem_5rem_1fr_3rem_3rem_auto_auto_auto_auto_auto] gap-5 dark:bg-gray-700  dark:text-white text-gray-800 text-sm bg-white px-3 py-2`}
-    >
-      <div>{id}</div>
-      <div>{product_code}</div>
-      <div>{product_image}</div>
-      <div>{product_name}</div>
-      <div>{product_piece}</div>
-      <div>{product_box}</div>
-      <div>{product_reqular_price}</div>
-      <div>{product_selling_price}</div>
-      <div>{product_status}</div>
-      <div></div>
-    </div>
+    <tr class='text-gray-700 text-sm dark:text-white'>
+      <td class='px-4 py-3 max-w-4 w-4 border dark:border-gray-600'>
+        <div>{id}</div>
+      </td>
+      <td class='px-4 py-3  border dark:border-gray-600'>
+        <div>{product_code}</div>
+      </td>
+      <td class='px-4 py-3  border dark:border-gray-600'>
+        <div>{product_image}</div>
+      </td>
+      <td class='px-4 py-3  border dark:border-gray-600'>
+        <div>{product_name}</div>
+      </td>
+      <td class='px-4 py-3  border dark:border-gray-600'>
+        <div>{product_piece}</div>
+      </td>
+      <td class='px-4 py-3  border dark:border-gray-600'>
+        <div>{product_box}</div>
+      </td>
+      <td class='px-4 py-3  border dark:border-gray-600'>
+        <div>{product_reqular_price}</div>
+      </td>
+      <td class='px-4 py-3  border dark:border-gray-600'>
+        <div>{product_selling_price}</div>
+      </td>
+      <td class='px-4 py-3  border dark:border-gray-600'>
+        <div>{product_status}</div>
+      </td>
+      <td class='px-4 py-3  border dark:border-gray-600'></td>
+    </tr>
   );
 }
 

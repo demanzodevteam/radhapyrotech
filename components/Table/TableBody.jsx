@@ -5,11 +5,11 @@ import { TableRow } from './TableRow';
 function TableBody() {
   const { data: products = [] } = useProducts();
   return (
-    <div className='divide-y py-4 divide-gray-300 dark:bg-gray-700'>
+    <tbody className='py-4'>
       {products?.map((product) => (
         <TableRow key={product.id} data={product} />
       ))}
-    </div>
+    </tbody>
   );
 }
 

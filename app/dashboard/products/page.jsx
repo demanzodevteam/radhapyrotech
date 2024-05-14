@@ -22,16 +22,16 @@ async function ProductsPage() {
         <TableOperations headingText='All products' />
         <Table>
           <TableHeader>
-            <div>No</div>
-            <div>Code</div>
-            <div>Image</div>
-            <div>Name</div>
-            <div>Piece</div>
-            <div>Box</div>
-            <div>Regular Price</div>
-            <div>Selling Price</div>
-            <div>Status</div>
-            <div>Edit/delete</div>
+          <th class='px-3 py-2'>No</th>
+          <th class='px-3 py-2'>Code</th>
+          <th class='px-3 py-2'>Image</th>
+          <th class='px-3 py-2'>Name</th>
+          <th class='px-3 py-2'>Piece</th>
+          <th class='px-3 py-2'>Box</th>
+          <th class='px-3 py-2'>Regular Price</th>
+          <th class='px-3 py-2'>Selling Price</th>
+          <th class='px-3 py-2'>Status</th>
+          <th class='px-3 py-2'></th>
           </TableHeader>
           <TableBody />
         </Table>
@@ -41,3 +41,9 @@ async function ProductsPage() {
 }
 
 export default ProductsPage;
+
+
+
+
+      
+      
