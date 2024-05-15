@@ -12,35 +12,32 @@ function TableRow({ data }) {
   } = data ?? {};
   // console.log(data);
   return (
-    <tr class='text-gray-700 text-sm dark:text-white'>
-      <td class='px-4 py-3 max-w-4 w-4 border dark:border-gray-600'>
-        <div>{id}</div>
+    <tr className='text-gray-700 text-sm dark:text-white'>
+      <td className='px-4 py-3 max-w-4 w-4 border dark:border-gray-600'>
+        <span>{id}</span>
       </td>
-      <td class='px-4 py-3  border dark:border-gray-600'>
-        <div>{product_code}</div>
+      <td className='px-4 py-3  border dark:border-gray-600'>
+        <span>{product_code}</span>
       </td>
-      <td class='px-4 py-3  border dark:border-gray-600'>
-        <div>{product_image}</div>
+      <td className='px-4 py-3  border dark:border-gray-600'>
+        <span>{product_name}</span>
       </td>
-      <td class='px-4 py-3  border dark:border-gray-600'>
-        <div>{product_name}</div>
+      <td className='px-4 py-3  border dark:border-gray-600'>
+        <span>{product_piece}</span>
       </td>
-      <td class='px-4 py-3  border dark:border-gray-600'>
-        <div>{product_piece}</div>
+      <td className='px-4 py-3  border dark:border-gray-600'>
+        <span>{product_box}</span>
       </td>
-      <td class='px-4 py-3  border dark:border-gray-600'>
-        <div>{product_box}</div>
+      <td className='px-4 py-3  border dark:border-gray-600'>
+        <span>{product_reqular_price}</span>
       </td>
-      <td class='px-4 py-3  border dark:border-gray-600'>
-        <div>{product_reqular_price}</div>
+      <td className='px-4 py-3  border dark:border-gray-600'>
+        <span>{product_selling_price}</span>
       </td>
-      <td class='px-4 py-3  border dark:border-gray-600'>
-        <div>{product_selling_price}</div>
+      <td className='px-4 py-3  border dark:border-gray-600'>
+        <span>{product_status}</span>
       </td>
-      <td class='px-4 py-3  border dark:border-gray-600'>
-        <div>{product_status}</div>
-      </td>
-      <td class='px-4 py-3  border dark:border-gray-600'></td>
+      <td className='px-4 py-3  border dark:border-gray-600'></td>
     </tr>
   );
 }

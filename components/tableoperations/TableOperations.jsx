@@ -1,9 +1,8 @@
-function TableOperations({ children}) {
+function TableOperations({ children }) {
   return (
-    <div className='flex justify-between items-center'>
-      <div>{children}</div>
+    <div className='flex flex-col gap-6'>
+      {children}
     </div>
   );
 }
-
 export { TableOperations };

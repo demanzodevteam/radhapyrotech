@@ -8,7 +8,7 @@ function Navlink({ href, children, icon }) {
     <Link
       href={href}
       className={`${
-        pathName === href ? 'text-blue-500' : ''
+        pathName === href ? 'text-primary' : ''
       } flex items-center text-base`}
     >
       <span className='mr-3 inline-block text-xl'>{icon}</span>

@@ -44,5 +44,6 @@ next-env.d.ts
 # prettier
 .prettierrc
 
-#Prisma
-prisma
+
+# prisma
+/prisma

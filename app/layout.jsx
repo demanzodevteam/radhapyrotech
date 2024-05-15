@@ -6,7 +6,6 @@ import { DarkModeProvider } from '@/darkmodecontext/DarkModeProvider';
 const nunitoSans = Nunito_Sans({
   subsets: ['latin'],
   weight: ['200', '300', '400', '500', '600', '700', '800', '900', '1000'],
-  variable: '--font-nunitoSans',
 });
 
 export const metadata = {
@@ -19,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body
         suppressHydrationWarning={true}
-        className={`${nunitoSans.variable} ${nunitoSans.className} text-gray-800 dark:text-white`}
+        className={`${nunitoSans.className} text-gray-800 dark:text-white`}
       >
         <DarkModeProvider>
           <TanstackProvider>{children}</TanstackProvider>
