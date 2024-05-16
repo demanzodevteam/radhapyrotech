@@ -11,16 +11,18 @@ export async function GET(request) {
       searchParams.get("status") !== ""
         ? searchParams.get("status")
         : undefined;
-    // console.log(`status: ${status}`);
+
     const startDate = searchParams.get("startDate")
       ? new Date(searchParams.get("startDate"))
       : undefined;
     const endDate = searchParams.get("endDate")
       ? new Date(searchParams.get("endDate"))
       : undefined;
-    // console.log(
-    //   `search : ${search} \n status: ${status} \n startDate: ${startDate} \n endDate: ${endDate}`
-    // );
+
+    // Pagination parameters
+    const page = parseInt(searchParams.get("page")) || 1; // Default page 1
+    const pageSize = parseInt(searchParams.get("pageSize")) || 10; // Default page size 10
+
     const orders = await prisma.Order.findMany({
       where: {
         customer_name: search
@@ -35,23 +37,48 @@ export async function GET(request) {
           { order_date: endDate ? { lte: new Date(endDate) } : undefined },
         ],
       },
-
       orderBy: {
         id: "desc",
       },
-      skip: 0,
-      take: 10,
+      skip: (page - 1) * pageSize,
+      take: pageSize,
     });
 
-    // const orders = await prisma.Order.findMany();
-
-    // console.log("orders: " + JSON.stringify(orders));
-    return NextResponse.json(orders, {
-      headers: {
-        "Content-Type": "application/json",
-        "API-Key": process.env.DATA_API_KEY,
+    // Get total count for pagination metadata
+    const totalCount = await prisma.Order.count({
+      where: {
+        customer_name: search
+          ? {
+              startsWith: search,
+              mode: "insensitive",
+            }
+          : undefined,
+        status: status ? { equals: status } : undefined,
+        AND: [
+          { order_date: startDate ? { gte: startDate } : undefined },
+          { order_date: endDate ? { lte: new Date(endDate) } : undefined },
+        ],
       },
     });
+
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+    const metadata = {
+      totalCount,
+      totalPages,
+      currentPage: page,
+      pageSize,
+    };
+
+    return NextResponse.json(
+      { data: orders, meta: metadata },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "API-Key": process.env.DATA_API_KEY,
+        },
+      }
+    );
   } catch (error) {
     console.log(error.message);
     return NextResponse.json(
@@ -62,12 +89,6 @@ export async function GET(request) {
     );
   }
 }
-
-// const orders = await prisma.orders.findMany();
-
-// export async function GET() {
-//   return new Response(`hi`);
-// }
 
 export async function PUT(request) {
   try {
@@ -96,31 +117,3 @@ export async function PUT(request) {
     })
   );
 }
-
-// export default async function handler(req, res) {
-//   if (req.method !== "PUT") {
-//     res.status(405).json({ message: "Method Not Allowed" });
-//     return;
-//   }
-
-//   const { id, status } = req.body;
-
-//   try {
-//     const updatedOrder = await prisma.orders.update({
-//       where: {
-//         order_id: id,
-//       },
-//       data: {
-//         status: status,
-//       },
-//     });
-
-//     res.status(200).json({
-//       message: "Order status updated successfully",
-//       updatedOrder,
-//     });
-//   } catch (error) {
-//     console.error("Error updating order status:", error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// }
