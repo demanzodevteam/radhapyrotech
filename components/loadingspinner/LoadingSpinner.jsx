@@ -8,7 +8,7 @@ function LoadingSpinner() {
     margin: '100px auto',
   };
   return (
-    <div className='flex flex-col items-center justify-center bg-white dark:bg-gray-800'>
+    <div className='flex flex-col h-full w-full items-center justify-center bg-white dark:bg-gray-800'>
       <MoonLoader
         color='#F59000'
         loading={true}

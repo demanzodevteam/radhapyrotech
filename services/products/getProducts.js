@@ -11,10 +11,14 @@ export async function getProducts() {
       return new Error('failed to fetch products');
     }
 
+    if (res.status === 404) {
+      return new Error('failed to fetch products');
+    }
+
     const data = await res.json();
     return data;
   } catch (error) {
-    console.Error(error.message);
+    console.error(error.message);
     return [];
   }
 }
