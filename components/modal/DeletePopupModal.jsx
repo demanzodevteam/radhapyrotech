@@ -34,15 +34,15 @@ function Window({ children, openWindow }) {
 
   if (showModal !== openWindow) return null;
   return createPortal(
-    <div className='fixed top-0 left-0 w-full min-h-screen z-[1000] backdrop-blur-modal-blur bg-white/10 transition-all'>
-      <div className='absolute overflow-y-auto top-0 shadow right-0 bottom-0 h-full w-[100%] md:w-[65%] bg-gray-50 dark:bg-gray-800  p-3 transition-all'>
+    <div className='fixed top-0 p-4 md:p-0 left-0 w-full min-h-screen z-[1000] backdrop-blur-modal-blur bg-white/10 transition-all'>
+      <div className='absolute  w-[90%] md:w-auto overflow-y-auto top-[50%] shadow-md translate-x-[-50%] translate-y-[-50%] left-[50%]  bg-gray-50 dark:bg-gray-800  p-2 rounded transition-all'>
         <button
           onClick={closeModal}
-          className='hover:bg-primary hover:bg-opacity-90 text-white bg-primary   bg-none border-none p-2 rounded absolute top-2 right-8 transition-all translate-x-3 text-xl'
+          className='hover:bg-primary hover:bg-opacity-90 text-white bg-primary   bg-none border-none p-1 md:p-2 rounded absolute top-4 right-4 transition-all  text-xl'
         >
           <HiMiniXMark />
         </button>
-        <div className='pt-8 p-6'>
+        <div className='pt-8 p-4'>
           {cloneElement(children, { onCloseModal: closeModal })}
         </div>
       </div>

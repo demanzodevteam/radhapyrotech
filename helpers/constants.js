@@ -1,3 +1,4 @@
 const api_url = process.env.NEXT_PUBLIC_API_DOMAIN || null;
-
-export { api_url };
+const cloudinary_url = process.env.CLOUDINARY_IMAGE_UPLOADED_URL;
+const PAGE_SIZE = 5;
+export { api_url, cloudinary_url, PAGE_SIZE };

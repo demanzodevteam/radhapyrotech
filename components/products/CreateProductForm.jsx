@@ -1,38 +1,49 @@
 'use client';
 
+import { useForm } from 'react-hook-form';
 import { FormRow } from '../formrow/FormRow';
-import { useCategories } from '../hooks/categories/useCategories';
+import { useRawcategories } from '../hooks/categories/useRawCategories';
 import { useCreateProduct } from '../hooks/products/useCreateProduct';
 import { LoadingSpinner } from '../loadingspinner/LoadingSpinner';
 
 function CreateProductForm({ onCloseModal }) {
   // retriving categories for form input
-  const { data: categories, isLoading } = useCategories();
+  const { data: categories, isLoading } = useRawcategories();
 
   // create new product
   const { createProduct, isPending } = useCreateProduct();
 
-  function HandleSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(e.target);
+  // use form hook
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-    //   create a object
-    // const newProduct = {
-    //   product_code: formData.get('product_code'),
-    //   product_name: formData.get('product_name'),
-    //   product_piece: formData.get('product_piece'),
-    //   product_box: formData.get('product_box'),
-    //   product_reqular_price: formData.get('product_reqular_price'),
-    //   product_selling_price: formData.get('product_selling_price'),
-    //   product_image: formData.get('product_image'),
-    //   product_status: formData.get('product_status'),
-    //   product_categories: formData.getAll('product_categories'),
-    // };
+  function handleCreateProduct(data) {
+    // console.log(data);
+    // create a form data
+    const formData = new FormData();
+
+    formData.append('product_code', data.product_code);
+    formData.append('product_name', data.product_name);
+    formData.append('product_piece', data.product_piece);
+    formData.append('product_box', data.product_box);
+    formData.append('product_reqular_price', data.product_reqular_price);
+    formData.append('product_selling_price', data.product_selling_price);
+    formData.append('product_image', data?.product_image[0]);
+    formData.append('product_status', data.product_status);
+    formData.append('product_categories', data.product_categories);
 
     // sending a request
     createProduct(formData, {
       onSuccess: () => {
         onCloseModal?.();
+        reset();
+      },
+      onError: () => {
+        reset();
       },
     });
   }
@@ -41,116 +52,148 @@ function CreateProductForm({ onCloseModal }) {
 
   return (
     <form
-      className='flex flex-col md:grid md:grid-cols-2 pb- gap-y-3 gap-x-6'
-      onSubmit={HandleSubmit}
+      className='flex flex-col md:grid md:grid-cols-2 dark:text-white pb- gap-y-3 gap-x-6'
+      onSubmit={handleSubmit(handleCreateProduct)}
     >
-      <FormRow label='Product Code'>
+      <FormRow label='Product Code' error={errors?.product_code?.message}>
         <input
           type='number'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_code'
-          name='product_code'
-          required
           placeholder='code'
+          {...register('product_code', {
+            required: 'Please Enter The Product code',
+            minLength: {
+              value: 2,
+              message: 'A valid product code must be 2 character in length',
+            },
+          })}
         />
       </FormRow>
-      <FormRow label='Product Name'>
+      <FormRow label='Product Name' error={errors?.product_name?.message}>
         <input
           type='text'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_name'
-          name='product_name'
-          required
           placeholder='name'
+          {...register('product_name', {
+            required: 'Please Enter The Product Name',
+          })}
         />
       </FormRow>
-      <FormRow label='Piece'>
+      <FormRow label='Piece' error={errors?.product_piece?.message}>
         <input
           type='number'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_piece'
-          name='product_piece'
           placeholder='piece'
-          required
+          {...register('product_piece', {
+            required: 'Please Enter The Product Piece',
+          })}
         />
       </FormRow>
-      <FormRow label='Box'>
+      <FormRow label='Box' error={errors?.product_box?.message}>
         <input
           type='number'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_box'
-          required
           placeholder='box'
+          {...register('product_box', {
+            required: 'Please Enter The Product Box',
+          })}
         />
       </FormRow>
-      <FormRow label='MRP'>
+      <FormRow label='MRP' error={errors?.product_reqular_price?.message}>
         <input
           type='number'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_reqular_price'
-          name='product_reqular_price'
-          required
           placeholder='regular price'
+          {...register('product_reqular_price', {
+            required: 'Please Enter The regular price',
+          })}
         />
       </FormRow>
-      <FormRow label='Selling Price'>
+      <FormRow
+        label='Selling Price'
+        error={errors?.product_selling_price?.message}
+      >
         <input
           type='number'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_selling_price'
-          name='product_selling_price'
-          required
           placeholder='Product Name'
+          name='product_selling_price'
+          {...register('product_selling_price', {
+            required: 'Please Enter The Selling Price',
+            validate: (value, formvalues) =>
+              Number(value) <= Number(formvalues.product_reqular_price) ||
+              'Selling Price Should be Less Than Reqular Price',
+          })}
         />
       </FormRow>
       <FormRow label='Product Status'>
         <select
-          className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
+          className='px-2 py-2 border-2   focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_status'
-          name='product_status'
           defaultValue={true}
+          {...register('product_status')}
         >
           <option value={true}>Enable</option>
           <option value={false}>Disable</option>
         </select>
       </FormRow>
-      <FormRow label='Product Image'>
+      <FormRow label='Product Image' error={errors?.product_image?.message}>
         <input
+          className='dark:bg-gray-900 px-2 py-2 rounded outline-none border-2 border-gray-600 focus:border-primary'
           type='file'
           id='product_image'
-          name='product_image'
-          className='dark:bg-gray-900 px-2 py-2 rounded outline-none border-2 border-gray-600 focus:border-primary'
+          {...register('product_image', {
+            required: 'Please Select The Product Image',
+          })}
         />
       </FormRow>
-      <FormRow label='Product Category'>
+      <FormRow
+        label='Product Category'
+        error={errors?.product_categories?.message}
+      >
         <select
+          className='dark:bg-gray-900 px-2 py-2 rounded outline-none border-2 border-gray-600 focus:border-primary'
           multiple
           id='product_categories'
-          name='product_categories'
-          className='dark:bg-gray-900 px-2 py-2 rounded outline-none border-2 border-gray-600 focus:border-primary'
+          {...register('product_categories', {
+            required: 'Please Select Atleast one Category',
+          })}
         >
-          {categories?.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.category_name}
-            </option>
-          ))}
+          <>
+            {categories.length === 0 ? (
+              <option>no categories found</option>
+            ) : (
+              categories?.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.category_name}
+                </option>
+              ))
+            )}
+          </>
         </select>
       </FormRow>
 
       <div className='flex mt-6  flex-col col-span-2 justify-end'>
         <div className='flex gap-x-4 justify-start'>
           <button
-            className='px-6 py-2 border border-primary hover:bg-opacity-90 rounded-md text-gray-800 dark:text-white text-base'
-            type='reset'
+            className='px-4 py-2 dark:border dark:border-solid border-gray-600 dark:bg-transparent hover:dark:bg-gray-900 bg-gray-800  hover:bg-gray-800 hover:bg-opacity-90 rounded-md text-white text-base'
+            // type='reset'
+            onClick={onCloseModal}
           >
-            Clear
+            Cancel
           </button>
           <button
             disabled={isPending}
             className='px-6 py-2 bg-primary hover:bg-primary hover:bg-opacity-90 rounded-md text-white text-base'
             type='submit'
           >
-            Submit
+            Create
           </button>
         </div>
       </div>
@@ -158,4 +201,4 @@ function CreateProductForm({ onCloseModal }) {
   );
 }
 
-export default CreateProductForm;
+export { CreateProductForm };

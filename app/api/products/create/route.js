@@ -1,5 +1,6 @@
 import cloudinary from '@/config/cloudinary';
 import { prisma } from '@/config/db';
+import { NextResponse } from 'next/server';
 
 export async function POST(req, res) {
   try {
@@ -8,6 +9,8 @@ export async function POST(req, res) {
 
     // get product image
     const image = await formdata.get('product_image');
+
+    // console.log(image);
     const arrayBuffer = await image.arrayBuffer();
     const imageBuffer = Buffer.from(arrayBuffer).toString('base64');
 
@@ -26,10 +29,13 @@ export async function POST(req, res) {
     }
 
     // categories values convert to number
-    const categories = await formdata
-      .getAll('product_categories')
-      ?.map((categoryId) => Number(categoryId));
+    const categories =
+      formdata
+        .get('product_categories')
+        ?.split(',')
+        .map((categoryId) => Number(categoryId)) || [];
 
+    // console.log(categories);
     const newProduct = {
       product_code: Number(formdata.get('product_code')),
       product_name: formdata.get('product_name'),
@@ -55,15 +61,26 @@ export async function POST(req, res) {
         product_image: newProduct.product_image,
         product_status: newProduct.product_status,
         product_categories: {
-          connect: newProduct.categories,
+          connect: newProduct.product_categories.map((categoryId) => ({
+            id: categoryId,
+          })),
         },
       },
     });
-
-    return new Response(JSON.stringify(res), {
-      status: 200,
-    });
+    return NextResponse.json(res, { status: 200 });
+    // return NextResponse.json('testing purpose', { status: 200 });
   } catch (error) {
-    return new Response(JSON.stringify(error), { status: 500 });
+    console.log(error);
+    if (error.code === 'P2002') {
+      return NextResponse.json(
+        { error: 'A Product Code Is Already Exists.Pls Try With Unique One' },
+        { status: 404 }
+      );
+    } else {
+      return NextResponse.json(
+        { error: 'An Unknown Error Occurred While Creating The Product.' },
+        { status: 500 }
+      );
+    }
   }
 }

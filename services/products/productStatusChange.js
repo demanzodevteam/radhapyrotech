@@ -15,10 +15,13 @@ export async function productStatusChange(data) {
       },
     });
 
-    if (res.status === 500) {
-      throw new Error('Product Status Updation Failed');
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.error);
     }
+
+    return res.json();
   } catch (error) {
-    return error;
+    throw new Error(error.message);
   }
 }

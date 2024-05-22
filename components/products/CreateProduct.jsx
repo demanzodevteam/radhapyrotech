@@ -1,5 +1,5 @@
 import { PopupModal } from '../modal/PopupModal';
-import CreateProductForm from './CreateProductForm';
+import { CreateProductForm } from './CreateProductForm';
 
 function CreateProduct() {
   return (
@@ -7,7 +7,7 @@ function CreateProduct() {
       <div className='flex justify-end'>
         <PopupModal>
           <PopupModal.Open openKey='addproduct'>
-            <button className='px-4 py-2 bg-primary hover:bg-primary hover:bg-opacity-90 rounded-md text-white text-base'>
+            <button className='px-4 py-[10px] bg-primary hover:bg-primary hover:bg-opacity-90 rounded-md text-white text-base'>
               Add Product +
             </button>
           </PopupModal.Open>

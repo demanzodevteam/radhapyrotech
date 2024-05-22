@@ -1,9 +1,9 @@
-function FormRow({ label, children, error }) {
+function FormRow({ label, children, error, imageinfo }) {
   return (
     <div className='flex flex-col gap-2'>
       {label && (
         <label
-          className='text-gray-800 dark:text-white text-base'
+          className='text-gray-800 capitalize dark:text-white text-base'
           htmlFor={children.props.id}
         >
           {label}
@@ -11,7 +11,9 @@ function FormRow({ label, children, error }) {
       )}
       {children}
       {error && (
-        <span className='text-red-500 text-sm font-normal'>{error}</span>
+        <span className='text-red-600 capitalize text-sm font-normal'>
+          {error}
+        </span>
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   darkMode: 'class',
   content: [
@@ -8,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-nunitoSans)', 'var(--font-notoSans)', 'sans-serif'],
+      },
       gridTemplateColumns: {
         '24/1fr': '16rem 1fr',
         '15/1fr': '15rem 1fr',

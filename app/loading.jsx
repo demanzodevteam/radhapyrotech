@@ -1,7 +1,6 @@
-'use client';
 import { MoonLoader } from 'react-spinners';
 
-function Loading({ loading }) {
+function Loading() {
   const override = {
     display: 'block',
     margin: '100px auto',
@@ -10,7 +9,7 @@ function Loading({ loading }) {
     <div className='flex flex-col items-center justify-center min-h-screen bg-white dark:bg-gray-800'>
       <MoonLoader
         color='#F59000'
-        loading={loading}
+        loading={true}
         cssOverride={override}
         size={60}
         aria-label='Loading Spinner'
