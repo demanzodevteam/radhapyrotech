@@ -68,9 +68,7 @@ export async function POST(req, res) {
       },
     });
     return NextResponse.json(res, { status: 200 });
-    // return NextResponse.json('testing purpose', { status: 200 });
   } catch (error) {
-    console.log(error);
     if (error.code === 'P2002') {
       return NextResponse.json(
         { error: 'A Product Code Is Already Exists.Pls Try With Unique One' },

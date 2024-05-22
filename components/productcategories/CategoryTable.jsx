@@ -1,3 +1,4 @@
+'use client';
 import { useCategories } from '../hooks/categories/useCategories';
 import { LoadingSpinner } from '../loadingspinner/LoadingSpinner';
 import { NotFound } from '../notfound/NotFound';

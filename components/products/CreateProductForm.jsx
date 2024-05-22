@@ -52,7 +52,7 @@ function CreateProductForm({ onCloseModal }) {
 
   return (
     <form
-      className='flex flex-col md:grid md:grid-cols-2 dark:text-white pb- gap-y-3 gap-x-6'
+      className='flex flex-col md:grid md:grid-cols-2 dark:text-white  gap-y-3 gap-x-6'
       onSubmit={handleSubmit(handleCreateProduct)}
     >
       <FormRow label='Product Code' error={errors?.product_code?.message}>

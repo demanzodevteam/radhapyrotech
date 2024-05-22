@@ -1,5 +1,7 @@
 import { TableActions } from './TableActions';
 import { ToggleBtn } from '../togglebtn/ToggleBtn';
+import { UpdateProduct } from '../products/UpdateProduct';
+import { DeleteProduct } from '../products/DeleteProduct';
 
 function TableRow({ data }) {
   const {
@@ -12,7 +14,7 @@ function TableRow({ data }) {
     product_selling_price,
     product_image,
     product_status,
-    product_categories
+    product_categories,
   } = data ?? {};
   // console.log(data);
   return (
@@ -42,22 +44,23 @@ function TableRow({ data }) {
         <ToggleBtn productId={id} currentStatus={product_status} />
       </td>
       <td className='px-4 py-3  border border-gray-300 dark:border-gray-600'>
-        <TableActions
-          updateProduct={{
-            id,
-            product_code,
-            product_name,
-            product_piece,
-            product_box,
-            product_reqular_price,
-            product_selling_price,
-            product_image,
-            product_status,
-            product_categories
-          }}
-          resource={product_name}
-          productId={id}
-        />
+        <TableActions>
+          <UpdateProduct
+            updateProduct={{
+              id,
+              product_code,
+              product_name,
+              product_piece,
+              product_box,
+              product_reqular_price,
+              product_selling_price,
+              product_image,
+              product_status,
+              product_categories,
+            }}
+          />
+          <DeleteProduct resource={product_name} productId={id} />
+        </TableActions>
       </td>
     </tr>
   );
