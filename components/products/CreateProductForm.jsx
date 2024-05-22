@@ -1,129 +1,95 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import FormRow from '../formrow/FormRow';
+import { FormRow } from '../formrow/FormRow';
 import { useCategories } from '@/hooks/categories/useCategories';
+import { HandleCreateProduct } from '@/services/products/createProduct';
 
 function CreateProductForm() {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
-
   const { data: categories } = useCategories();
 
-  function handleform(data) {
-    console.log(data);
-  }
   return (
     <form
       className='flex flex-col md:grid md:grid-cols-2 pb- gap-y-3 gap-x-6'
-      onSubmit={handleSubmit(handleform)}
+      action={HandleCreateProduct}
     >
-      <FormRow label='Product Code' error={errors?.product_code?.message}>
+      <FormRow label='Product Code'>
         <input
           type='number'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_code'
-          {...register('product_code', {
-            required: 'please enter the product code',
-          })}
+          name='product_code'
           placeholder='Product Code'
         />
       </FormRow>
-      <FormRow label='Product Name' error={errors?.product_name?.message}>
+      <FormRow label='Product Name'>
         <input
           type='text'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_name'
-          {...register('product_name', {
-            required: 'please enter the product name',
-          })}
+          name='product_name'
           placeholder='Product Name'
         />
       </FormRow>
-      <FormRow label='Piece' error={errors?.product_piece?.message}>
+      <FormRow label='Piece'>
         <input
           type='number'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_piece'
-          {...register('product_piece', {
-            required: 'piece',
-          })}
+          name='product_piece'
           placeholder='Product Name'
         />
       </FormRow>
-      <FormRow label='Box' error={errors?.product_box?.message}>
+      <FormRow label='Box'>
         <input
           type='number'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_box'
-          {...register('product_box', {
-            required: 'box',
-          })}
+          name='product_box'
           placeholder='Product Name'
         />
       </FormRow>
-      <FormRow label='MRP' error={errors?.product_reqular_price?.message}>
+      <FormRow label='MRP'>
         <input
           type='number'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_reqular_price'
-          {...register('product_reqular_price', {
-            required: 'MRP',
-          })}
+          name='product_reqular_price'
           placeholder='Product Name'
         />
       </FormRow>
-      <FormRow
-        label='Selling Price'
-        error={errors?.product_selling_price?.message}
-      >
+      <FormRow label='Selling Price'>
         <input
           type='number'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_selling_price'
-          {...register('product_selling_price', {
-            required: 'selling price',
-          })}
+          name='product_selling_price'
           placeholder='Product Name'
         />
       </FormRow>
-      <FormRow label='Product Status' error={errors?.product_status?.message}>
+      <FormRow label='Product Status'>
         <select
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_status'
-          {...register('product_status', {
-            required: 'select the product status',
-          })}
+          name='product_status'
           defaultValue={true}
         >
           <option value={true}>Enable</option>
           <option value={false}>Disable</option>
         </select>
       </FormRow>
-      <FormRow label='Product Image' error={errors?.product_image?.message}>
+      <FormRow label='Product Image'>
         <input
           type='file'
           id='product_image'
-          {...register('product_image', {
-            required: 'please select the product category',
-          })}
+          name='product_image'
           className='dark:bg-gray-900 px-2 py-2 rounded outline-none border-2 border-gray-600 focus:border-primary'
         />
       </FormRow>
-      <FormRow
-        label='Product Category'
-        error={errors?.product_categories?.message}
-      >
+      <FormRow label='Product Category'>
         <select
           multiple
           id='product_categories'
-          {...register('product_categories', {
-            required: 'please select the product category',
-          })}
+          name='product_categories'
           className='dark:bg-gray-900 px-2 py-2 rounded outline-none border-2 border-gray-600 focus:border-primary'
         >
           {categories?.map((category) => (

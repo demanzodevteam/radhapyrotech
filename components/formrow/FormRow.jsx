@@ -17,4 +17,4 @@ function FormRow({ label, children, error }) {
   );
 }
 
-export default FormRow;
+export { FormRow };

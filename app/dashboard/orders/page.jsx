@@ -210,7 +210,12 @@ export default function Orders() {
                 {orders?.data?.map((order, index) => {
                   return (
                     <tr key={order.id} className="py-2 border-t-2">
-                      <td className="mx-4 py-2 text-xs ">{index + 1}</td>
+                      <td className="mx-4 py-2 text-xs ">
+                        {index +
+                          (orders?.meta?.currentPage == 1
+                            ? 1
+                            : 10 * (Number(orders?.meta?.currentPage) - 1) + 1)}
+                      </td>
                       <td className="mx-4 py-2 text-xs ">{order.id}</td>
                       <td className="mx-4 py-2 text-xs ">
                         {formatDate(order.order_date)}
