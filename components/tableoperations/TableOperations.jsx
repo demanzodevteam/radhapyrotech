@@ -1,6 +1,6 @@
 function TableOperations({ children }) {
   return (
-    <div className='flex flex-col gap-6'>
+    <div className='container mx-auto flex flex-col gap-6'>
       {children}
     </div>
   );

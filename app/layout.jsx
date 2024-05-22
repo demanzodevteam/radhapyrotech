@@ -1,7 +1,12 @@
 import { Nunito_Sans } from 'next/font/google';
 import './globals.css';
-import TanstackProvider from '@/tanstack_provider/TanstackProvider';
+import { TanstackProvider } from '@/components/tanstack_provider/TanstackProvider';
 import { DarkModeProvider } from '@/darkmodecontext/DarkModeProvider';
+import { Toaster } from 'react-hot-toast';
+import {
+  DashboardContext,
+  DashboardContextProvider,
+} from '@/dashboardcontext/DashboardContextProvider';
 
 const nunitoSans = Nunito_Sans({
   subsets: ['latin'],
@@ -20,9 +25,31 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning={true}
         className={`${nunitoSans.className} text-gray-800 dark:text-white`}
       >
-        <DarkModeProvider>
-          <TanstackProvider>{children}</TanstackProvider>
-        </DarkModeProvider>
+        <DashboardContextProvider>
+          <DarkModeProvider>
+            <TanstackProvider>{children}</TanstackProvider>
+          </DarkModeProvider>
+        </DashboardContextProvider>
+        <Toaster
+          position='top-center'
+          gutter={12}
+          containerStyle={{ margin: '8px' }}
+          toastOptions={{
+            success: {
+              duration: 3000,
+            },
+            error: {
+              duration: 5000,
+            },
+            style: {
+              fontSize: '16px',
+              maxWidth: '500px',
+              padding: '16px 24px',
+              // backgroundColor: "bg-slate",
+              // color: "var(--color-gray-700)",
+            },
+          }}
+        />
       </body>
     </html>
   );

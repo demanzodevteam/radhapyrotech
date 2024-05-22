@@ -40,6 +40,9 @@ export async function GET(request) {
       orderBy: {
         id: "desc",
       },
+      include: {
+        OrderedProduct: true,
+      },
       skip: (page - 1) * pageSize,
       take: pageSize,
     });
@@ -62,7 +65,7 @@ export async function GET(request) {
     });
 
     const totalPages = Math.ceil(totalCount / pageSize);
-
+    // console.log(`orders: ${JSON.stringify(orders)}`);
     const metadata = {
       totalCount,
       totalPages,

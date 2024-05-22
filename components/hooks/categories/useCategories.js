@@ -1,7 +1,7 @@
 'use client';
 
 import { getCategories } from '@/services/categories/getCategories';
-import { queryKeys } from '@/tanstack_provider/queryKeys';
+import { queryKeys } from '@/components/tanstack_provider/queryKeys';
 import { useQuery } from '@tanstack/react-query';
 
 function useCategories() {

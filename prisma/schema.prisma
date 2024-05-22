@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "mysql"
   url      = env("NEXT_PUBLIC_DATABASE_URL")
 }
 
@@ -11,12 +11,12 @@ model Product {
   id                    Int        @id @default(autoincrement())
   product_code          Int        @unique
   product_name          String
-  product_piece         String
-  product_box           String
   product_reqular_price Float
   product_selling_price Float
   product_image         String?
   product_status        Boolean    @default(true)
+  product_piece         Int
+  product_box           Int
   product_categories    Category[] @relation("CategoryToProduct")
 }
 
@@ -28,19 +28,29 @@ model Category {
 }
 
 model Order {
-  id               Int         @id @default(autoincrement())
-  customer_name    String      @db.VarChar(100)
-  customer_phone   String      @db.VarChar(20)
-  customer_Email   String      @db.VarChar(100)
-  customer_address String      @db.VarChar(300)
-  landmark         String      @db.VarChar(100)
-  customers_state  String      @db.VarChar(100)
-  customer_city    String      @db.VarChar(100)
-  customer_pincode String      @db.VarChar(10)
-  order_date       DateTime    @default(now())
-  total_price      Decimal     @db.Decimal(10, 2)
-  status           OrderStatus @default(pending)
-  ordered_products Json
+  id               Int              @id @default(autoincrement())
+  customer_name    String           @db.VarChar(100)
+  customer_phone   String           @db.VarChar(20)
+  customer_Email   String           @db.VarChar(100)
+  customer_address String           @db.VarChar(300)
+  landmark         String           @db.VarChar(100)
+  customers_state  String           @db.VarChar(100)
+  customer_city    String           @db.VarChar(100)
+  customer_pincode String           @db.VarChar(10)
+  order_date       DateTime         @default(now())
+  total_price      Decimal          @db.Decimal(10, 2)
+  status           OrderStatus      @default(pending)
+  OrderedProduct   OrderedProduct[]
+}
+
+model OrderedProduct {
+  id                    Int    @id @default(autoincrement())
+  product_code          Int
+  product_name          String
+  product_selling_price Float
+  quantity              Int
+  orderId               Int
+  Order                 Order  @relation(fields: [orderId], references: [id])
 }
 
 enum OrderStatus {

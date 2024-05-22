@@ -40,7 +40,11 @@ const OrderStatus = ({ order }) => {
       </div>
       <div>
         <select
-          className={!edit ? "hidden" : "block"}
+          className={
+            !edit
+              ? "hidden"
+              : "block pl-2 dark:bg-[#1f2937]  dark:placeholder-inherit dark:text-white focus:outline-none"
+          }
           onChange={handelChange}
           defaultValue={order.status}
         >

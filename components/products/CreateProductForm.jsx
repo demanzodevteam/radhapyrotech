@@ -1,16 +1,48 @@
 'use client';
 
 import { FormRow } from '../formrow/FormRow';
-import { useCategories } from '@/hooks/categories/useCategories';
-import { HandleCreateProduct } from '@/services/products/createProduct';
+import { useCategories } from '../hooks/categories/useCategories';
+import { useCreateProduct } from '../hooks/products/useCreateProduct';
+import { LoadingSpinner } from '../loadingspinner/LoadingSpinner';
 
-function CreateProductForm() {
-  const { data: categories } = useCategories();
+function CreateProductForm({ onCloseModal }) {
+  // retriving categories for form input
+  const { data: categories, isLoading } = useCategories();
+
+  // create new product
+  const { createProduct, isPending } = useCreateProduct();
+
+  function HandleSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    //   create a object
+    // const newProduct = {
+    //   product_code: formData.get('product_code'),
+    //   product_name: formData.get('product_name'),
+    //   product_piece: formData.get('product_piece'),
+    //   product_box: formData.get('product_box'),
+    //   product_reqular_price: formData.get('product_reqular_price'),
+    //   product_selling_price: formData.get('product_selling_price'),
+    //   product_image: formData.get('product_image'),
+    //   product_status: formData.get('product_status'),
+    //   product_categories: formData.getAll('product_categories'),
+    // };
+
+    // sending a request
+    createProduct(formData, {
+      onSuccess: () => {
+        onCloseModal?.();
+      },
+    });
+  }
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <form
       className='flex flex-col md:grid md:grid-cols-2 pb- gap-y-3 gap-x-6'
-      action={HandleCreateProduct}
+      onSubmit={HandleSubmit}
     >
       <FormRow label='Product Code'>
         <input
@@ -18,7 +50,8 @@ function CreateProductForm() {
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_code'
           name='product_code'
-          placeholder='Product Code'
+          required
+          placeholder='code'
         />
       </FormRow>
       <FormRow label='Product Name'>
@@ -27,7 +60,8 @@ function CreateProductForm() {
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_name'
           name='product_name'
-          placeholder='Product Name'
+          required
+          placeholder='name'
         />
       </FormRow>
       <FormRow label='Piece'>
@@ -36,7 +70,8 @@ function CreateProductForm() {
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_piece'
           name='product_piece'
-          placeholder='Product Name'
+          placeholder='piece'
+          required
         />
       </FormRow>
       <FormRow label='Box'>
@@ -44,8 +79,8 @@ function CreateProductForm() {
           type='number'
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_box'
-          name='product_box'
-          placeholder='Product Name'
+          required
+          placeholder='box'
         />
       </FormRow>
       <FormRow label='MRP'>
@@ -54,7 +89,8 @@ function CreateProductForm() {
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_reqular_price'
           name='product_reqular_price'
-          placeholder='Product Name'
+          required
+          placeholder='regular price'
         />
       </FormRow>
       <FormRow label='Selling Price'>
@@ -63,6 +99,7 @@ function CreateProductForm() {
           className='px-2 py-2 border-2  focus:border-primary dark:bg-gray-900 border-gray-600 rounded outline-none'
           id='product_selling_price'
           name='product_selling_price'
+          required
           placeholder='Product Name'
         />
       </FormRow>
@@ -109,6 +146,7 @@ function CreateProductForm() {
             Clear
           </button>
           <button
+            disabled={isPending}
             className='px-6 py-2 bg-primary hover:bg-primary hover:bg-opacity-90 rounded-md text-white text-base'
             type='submit'
           >

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FaExclamationTriangle } from 'react-icons/fa';
-function notfound() {
+function Notfound() {
   return (
     <section className='bg-blue-50 min-h-screen flex-grow'>
       <div className='container m-auto max-w-2xl py-24'>
@@ -27,4 +27,4 @@ function notfound() {
   );
 }
 
-export default notfound;
+export default Notfound;

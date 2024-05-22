@@ -16,7 +16,7 @@ function DarkModeToggleBtn() {
     <>
       {isClient && (
         <button onClick={toggleDarkMode} className='inline'>
-          {isDarkMode ? <IoMoonSharp /> : <FiSun />}
+          {isDarkMode ? <FiSun /> : <IoMoonSharp />}
         </button>
       )}
     </>
