@@ -19,9 +19,9 @@ model Product {
 }
 
 model Category {
-  id            Int       @id @default(autoincrement())
-  category_name String    @unique
-  products      Product[]
+  id             Int       @id @default(autoincrement())
+  category_name  String    @unique
+  products       Product[]
 }
 
 model Order {

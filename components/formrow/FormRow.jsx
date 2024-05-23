@@ -1,4 +1,4 @@
-function FormRow({ label, children, error, imageinfo }) {
+function FormRow({ label, children, error }) {
   return (
     <div className='flex flex-col gap-2'>
       {label && (

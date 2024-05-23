@@ -7,10 +7,10 @@ function UpdateProduct({ updateProduct }) {
     <>
       <div className='flex justify-end'>
         <PopupModal>
-          <PopupModal.Open openKey='addproduct'>
+          <PopupModal.Open openKey='updateproduct'>
             <HiPencilAlt className='text-2xl  cursor-pointer dark:hover:text-green-500 text-green-600 hover:text-green-500 dark:text-green-600' />
           </PopupModal.Open>
-          <PopupModal.Window openWindow='addproduct'>
+          <PopupModal.Window openWindow='updateproduct'>
             <UpdateProductForm productData={updateProduct} />
           </PopupModal.Window>
         </PopupModal>

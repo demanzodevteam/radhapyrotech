@@ -1,20 +1,24 @@
 'use client';
-
 import { useForm } from 'react-hook-form';
 import { FormRow } from '../formrow/FormRow';
-import { useCreateCategory } from '../hooks/categories/useCreateCategory';
+import { useUpdateCategory } from '../hooks/categories/useUpdateCategory';
 
-function CategoryForm({ onCloseModal }) {
+function UpdateCategoryForm({ onCloseModal, updateCategory }) {
+  //  get update product data
+  const { id: categoryId, ...editcategoryvalues } = updateCategory;
+  const isEditSession = Boolean(categoryId);
   // form
   const {
     handleSubmit,
     register,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: isEditSession ? { ...editcategoryvalues } : {},
+  });
 
-  // create new category
-  const { createCategory, isPending } = useCreateCategory();
+  // update the category
+  const { UpdateCategory, isPending } = useUpdateCategory();
 
   function handleFormdata(data) {
     const formdata = new FormData();
@@ -23,21 +27,24 @@ function CategoryForm({ onCloseModal }) {
     formdata.append('category_name', data.category_name);
 
     // send a value
-    createCategory(formdata, {
-      onSuccess: () => {
-        onCloseModal?.();
-        reset();
-      },
-      onError: () => {
-        reset();
-      },
-    });
+    UpdateCategory(
+      { id: categoryId, data: formdata },
+      {
+        onSuccess: () => {
+          onCloseModal?.();
+          reset();
+        },
+        onError: () => {
+          reset();
+        },
+      }
+    );
   }
 
   return (
     <div className='w-full max-w-full md:w-[23rem] md:max-w-[30rem]  p-2  flex flex-col gap-5'>
       <h3 className='text-gray-800 text-xl md:text-2xl font-bold dark:text-white'>
-        New Category Name
+        Category Name
       </h3>
       <form
         onSubmit={handleSubmit(handleFormdata)}
@@ -66,7 +73,7 @@ function CategoryForm({ onCloseModal }) {
             type='submit'
             disabled={isPending}
           >
-            Create
+            Update
           </button>
         </div>
       </form>
@@ -74,4 +81,4 @@ function CategoryForm({ onCloseModal }) {
   );
 }
 
-export { CategoryForm };
+export { UpdateCategoryForm };
