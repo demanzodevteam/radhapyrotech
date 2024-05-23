@@ -1,16 +1,12 @@
 import { useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
+import { useOrderFilter } from "@/app/Context/OrderContext/OrderContextProvider";
 
-const Modal = ({ isVisible, children, onClose, className }) => {
-  const [modalVisible, setModalVisible] = useState(isVisible);
-
-  const closeModal = () => {
-    setModalVisible(false);
-    onClose();
-  };
+const Modal = ({ children, className }) => {
+  const { closeModal } = useOrderFilter();
 
   return (
-    <div className={isVisible ? `block ${className}` : `hidden ${className}`}>
+    <div className={className}>
       <div className="modal">
         <div className="p-4 grid place-content-end">
           <button onClick={closeModal}>

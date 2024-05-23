@@ -5,16 +5,18 @@ import { LoadingSpinner } from "../loadingspinner/LoadingSpinner";
 import { TableHeader } from "../table/TableHeader";
 import { TableBody } from "../table/TableBody";
 import { NotFound } from "../notfound/NotFound";
+import { TableProduct } from "../Table/TableProduct";
 
 function ProductsTable() {
-  const { data: products = [], isLoading } = useProducts();
+  const { Data: { data: products = [], totalProducts = 0 } = {}, isLoading } =
+    useProducts();
   if (isLoading) return <LoadingSpinner />;
   if (products?.message) return <NotFound message={products?.message} />;
   if (products.length === 0) return <NotFound message="No products Found" />;
   return (
-    <Table>
+    <TableProduct count={totalProducts}>
       <TableHeader>
-        <th className="px-3 py-2">No</th>
+        <th className="px-3 py-2 border-0">No</th>
         <th className="px-3 py-2">Code</th>
         <th className="px-3 py-2">Name</th>
         <th className="px-3 py-2">Piece</th>
@@ -28,7 +30,7 @@ function ProductsTable() {
         data={products}
         render={(product) => <TableRow key={product.id} data={product} />}
       />
-    </Table>
+    </TableProduct>
   );
 }
 

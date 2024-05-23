@@ -28,7 +28,6 @@ export async function GET(request) {
         customer_name: search
           ? {
               startsWith: search,
-              mode: "insensitive",
             }
           : undefined,
         status: status ? { equals: status } : undefined,
@@ -52,8 +51,7 @@ export async function GET(request) {
       where: {
         customer_name: search
           ? {
-              startsWith: search,
-              mode: "insensitive",
+              contains: search,
             }
           : undefined,
         status: status ? { equals: status } : undefined,

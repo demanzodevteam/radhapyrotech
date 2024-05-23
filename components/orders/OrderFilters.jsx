@@ -1,53 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
-import { useSearchParams } from "next/navigation";
+import { useOrderFilter } from "@/app/Context/OrderContext/OrderContextProvider";
 
 const OrderFilter = () => {
-  const searchParams = useSearchParams();
-  const page = searchParams.get("page");
-  const [queryParam, setQueryParam] = useState({
-    search: "",
-    status: "",
-    startDate: "",
-    endDate: "",
-    page: page,
-  });
-  useEffect(() => {
-    const storedSearchTerm = Cookies.get("search") || "";
-    const storedStatus = Cookies.get("status") || "";
-    const storedStartDate = Cookies.get("startDate") || "";
-    const storedEndDate = Cookies.get("endDate") || "";
-    // const storedPage = Cookies.get("page") || 1; // Retrieve page from cookies
-
-    setQueryParam({
-      ...queryParam,
-      search: storedSearchTerm,
-      status: storedStatus,
-      startDate: storedStartDate,
-      endDate: storedEndDate,
-      // page: storedPage, // Set page state from cookies
-    });
-  }, [queryParam]);
-
-  const handleReset = () => {
-    setQueryParam({
-      search: "",
-      status: `select`,
-      startDate: "",
-      endDate: "",
-      page: 1,
-    });
-    Cookies.remove("search");
-    Cookies.remove("status");
-    Cookies.remove("startDate");
-    Cookies.remove("endDate");
-    window.location.href = "/dashboard/orders";
-  };
-  const handleChange = (e) => {
-    setQueryParam({ ...queryParam, [e.target.name]: e.target.value, page: 1 });
-    Cookies.set(e.target.name, e.target.value, { expires: null });
-  };
+  const { queryParam, handleReset, handleChange } = useOrderFilter();
   return (
     <div className="">
       <div className="flex gap-8 pb-6">

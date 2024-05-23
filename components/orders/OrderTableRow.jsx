@@ -1,57 +1,13 @@
 "use client";
-import { useState } from "react";
 import { OrderStatus } from "./OrderStatus";
 import { IoMdOpen } from "react-icons/io";
 import { formatDate } from "@/services/dateFormatter/dateformatter";
+import { useOrderFilter } from "@/app/Context/OrderContext/OrderContextProvider";
 
 function OrderTableRow({ data }) {
+  const { showInvoice, showProducts } = useOrderFilter();
   const orders = data?.data;
   const meta = data?.meta;
-  const [invoiceData, setInvoiceData] = useState({
-    isVisible: false,
-    order: {},
-    z: 20,
-  });
-  const [productData, setProductData] = useState({
-    isVisible: false,
-    products: [],
-    totalPrice: 0,
-  });
-  const showProducts = (products, totalPrice) => {
-    setProductData({
-      ...productData,
-      isVisible: true,
-      products: products,
-      z: 0,
-      totalPrice: totalPrice,
-    });
-  };
-
-  const CloseProducts = () => {
-    setProductData({
-      isVisible: false,
-      products: [],
-      z: 20,
-      totalPrice: 0,
-    });
-  };
-  const showInvoice = (order) => {
-    setInvoiceData({
-      ...invoiceData,
-      isVisible: true,
-      order: order,
-      z: 0,
-    });
-  };
-
-  const closeInvoice = () => {
-    setInvoiceData({
-      ...invoiceData,
-      isVisible: false,
-      z: 20,
-    });
-  };
-  console.log(`orders: ${JSON.stringify(orders)}`);
   return (
     <tbody className="py-4">
       {orders?.map((order, index) => {
@@ -83,23 +39,11 @@ function OrderTableRow({ data }) {
             <td className="px-4 py-3  border border-gray-300 dark:border-gray-600">
               <span>{order.customer_address}</span>
             </td>
-            {/* <td className="px-4 py-3  border border-gray-300 dark:border-gray-600">
-              <span>{order.landmark}</span>
-            </td>
-            <td className="px-4 py-3  border border-gray-300 dark:border-gray-600">
-              <span>{order.customer_city}</span>
-            </td>
-            <td className="px-4 py-3  border border-gray-300 dark:border-gray-600">
-              <span>{order.customers_state}</span>
-            </td>
-            <td className="px-4 py-3  border border-gray-300 dark:border-gray-600">
-              <span>{order.customer_pincode}</span>
-            </td> */}
             <td className="px-4 py-3  border border-gray-300 dark:border-gray-600">
               <span>
                 <button
                   onClick={() => {
-                    showProducts(order.ordered_products, order.total_price);
+                    showProducts(order.OrderedProduct, order.total_price);
                   }}
                 >
                   <div className="flex gap-2 items-center">

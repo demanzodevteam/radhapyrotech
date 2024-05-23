@@ -1,6 +1,6 @@
 import { prisma } from '@/config/db';
-// import { PrismaClient } from '@prisma/client';
-// const prisma = new PrismaClient();
+import { NextResponse } from 'next/server';
+
 export async function PUT(request, { params }) {
   try {
     // new status data
@@ -19,8 +19,13 @@ export async function PUT(request, { params }) {
         product_status: product.currentStatus,
       },
     });
-    return new Response(JSON.stringify(res), { status: 200 });
+    return NextResponse.json(res, { status: 200 });
   } catch (error) {
-    return new Response(JSON.stringify(error), { status: 500 });
+    return NextResponse.json(
+      {
+        error: "There is a problem: can't change the status of the item.",
+      },
+      { status: 500 }
+    );
   }
 }

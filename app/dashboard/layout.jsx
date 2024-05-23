@@ -1,8 +1,8 @@
 "use client";
 import { Header } from "@/components/header/Header";
-import { MobileSidebar } from "@/components/sidebar/DashboardMobileMenu";
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { TanstackProvider } from "@/components/tanstack_provider/TanstackProvider";
+import { DarkModeProvider } from "@/darkmodecontext/DarkModeProvider";
 import { DashboardContextProvider } from "@/dashboardcontext/DashboardContextProvider";
 import { useDashboardContext } from "@/dashboardcontext/useDashboardContext";
 import { Toaster } from "react-hot-toast";
@@ -13,14 +13,18 @@ export default function DashboardLayout({ children }) {
     <div
       className={`grid grid-cols-1 ${
         showSidebar ? "md:grid-cols-15/1fr" : "grid-cols-1"
-      }  grid-rows-auto/1fr min-h-screen`}
+      }  grid-rows-auto/1fr h-auto md:h-screen`}
     >
       <Sidebar />
       <Header />
-      <main className="pt-6 md:pt-8 pb-4 px-4 md:px-[3rem] bg-gray-100 dark:bg-gray-800 overflow-y-auto">
-        <TanstackProvider>
-          <DashboardContextProvider>{children}</DashboardContextProvider>
-        </TanstackProvider>
+      <main className="md:overflow-y-scroll pt-6 md:pt-8 pb-4 px-4 md:px-[3rem] font-sans dark:text-white bg-gray-100 dark:bg-gray-800 ">
+        <DarkModeProvider>
+          <TanstackProvider>
+            <DashboardContextProvider>
+              <DarkModeProvider>{children}</DarkModeProvider>
+            </DashboardContextProvider>
+          </TanstackProvider>
+        </DarkModeProvider>
 
         <Toaster
           position="top-center"

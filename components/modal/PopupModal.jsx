@@ -38,7 +38,7 @@ function Window({ children, openWindow }) {
       <div className='absolute overflow-y-auto top-0 shadow right-0 bottom-0 h-full w-[100%] md:w-[65%] bg-gray-50 dark:bg-gray-800  p-3 transition-all'>
         <button
           onClick={closeModal}
-          className='hover:bg-primary hover:bg-opacity-90 text-white bg-primary   bg-none border-none p-2 rounded absolute top-2 right-8 transition-all translate-x-3 text-xl'
+          className='hover:bg-primary hover:bg-opacity-90 text-white bg-primary   bg-none border-none p-1 md:p-2 rounded absolute top-2 right-8 transition-all translate-x-3 text-xl'
         >
           <HiMiniXMark />
         </button>

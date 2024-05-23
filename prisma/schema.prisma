@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("NEXT_PUBLIC_DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model Product {
@@ -15,16 +15,13 @@ model Product {
   product_selling_price Float
   product_image         String?
   product_status        Boolean    @default(true)
-  product_piece         Int
-  product_box           Int
-  product_categories    Category[] @relation("CategoryToProduct")
+  product_categories    Category[]
 }
 
 model Category {
-  id             Int       @id @default(autoincrement())
-  category_name  String    @unique
-  category_image String?
-  products       Product[] @relation("CategoryToProduct")
+  id            Int       @id @default(autoincrement())
+  category_name String    @unique
+  products      Product[]
 }
 
 model Order {

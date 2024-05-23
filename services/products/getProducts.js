@@ -1,24 +1,27 @@
 import { api_url } from '@/helpers/constants';
 
-export async function getProducts() {
+export async function getProducts({ page, category, status, search, entries }) {
   try {
     if (!api_url) return [];
 
-    const res = await fetch(`${api_url}/products/read`);
+    const res = await fetch(
+      `${api_url}/products/read?category=${category}&status=${status}&search=${search}&entries=${entries}&page=${page}`
+    );
 
     // check res is ok
     if (!res.ok) {
-      return new Error('failed to fetch products');
+      const errorData = await res.json();
+      throw new Error(errorData.error || 'Failed To Fetch Products');
     }
 
     if (res.status === 404) {
-      return new Error('failed to fetch products');
+      throw new Error('Failed To Fetch Products');
     }
 
     const data = await res.json();
+    //console.log(data); //arrayofobj
     return data;
   } catch (error) {
-    console.error(error.message);
-    return [];
+    throw new Error(error.message);
   }
 }

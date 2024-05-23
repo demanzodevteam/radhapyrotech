@@ -13,7 +13,7 @@ import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 import { NotFound } from "@/components/notfound/NotFound";
 import Cookies from "js-cookie";
 
-export default function Orders() {
+export default function Orders1() {
   // const queryParams = new URLSearchParams(window.location.search);
   // const page = queryParams.get("page");
   const searchParams = useSearchParams();
@@ -37,17 +37,6 @@ export default function Orders() {
     endDate: "",
     page: page,
   });
-  const buildURL = (baseURL, options) => {
-    const params = new URLSearchParams();
-
-    Object.keys(options).forEach((key) => {
-      if (options[key]) {
-        params.append(key, options[key]);
-      }
-    });
-
-    return `${baseURL}?${params.toString()}`;
-  };
 
   useEffect(() => {
     const storedSearchTerm = Cookies.get("search") || "";

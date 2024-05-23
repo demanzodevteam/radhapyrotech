@@ -4,7 +4,7 @@ import Logo from './Logo';
 import NavMenus from './NavMenus';
 
 function Sidebar() {
-  const { showSidebar, handleOpen, handleClose } = useDashboardContext();
+  const { showSidebar } = useDashboardContext();
   return (
     <aside
       className={`${

@@ -1,12 +1,11 @@
 'use client';
 
 import { useDashboardContext } from '@/dashboardcontext/useDashboardContext';
-import DarkModeToggleBtn from '../darkmodetoggle/DarkModeToggleBtn';
 import { GoBellFill } from 'react-icons/go';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { HiOutlineArrowRightStartOnRectangle } from 'react-icons/hi2';
 import { IoMenu } from 'react-icons/io5';
-import { FaXmark } from 'react-icons/fa6';
+import DarkModeToggleBtn from '../darkmodetoggle/DarkModeToggleBtn';
 import { DashboardMobileMenu } from '../sidebar/DashboardMobileMenu';
 function Header() {
   const {
