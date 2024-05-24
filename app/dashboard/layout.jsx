@@ -38,9 +38,9 @@ export default function DashboardLayout({ children }) {
               duration: 5000,
             },
             style: {
-              fontSize: "16px",
-              maxWidth: "500px",
-              padding: "16px 16px",
+              fontSize: '16px',
+              maxWidth: '500px',
+              padding: '16px 16px',
               // backgroundColor: "bg-slate",
               // color: "var(--color-gray-700)",
             },
