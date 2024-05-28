@@ -56,6 +56,12 @@ model User {
   password  String
   email     String   @unique
   image     String?
+  role      Role     @default(Admin)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  Admin
+  Manager
 }
