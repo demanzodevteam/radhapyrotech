@@ -1,11 +1,10 @@
-import { useProducts } from "../hooks/products/useProducts";
-import { TableRow } from "../table/TableRow";
-import { Table } from "../table/Table";
-import { LoadingSpinner } from "../loadingspinner/LoadingSpinner";
-import { TableHeader } from "../table/TableHeader";
-import { TableBody } from "../table/TableBody";
-import { NotFound } from "../notfound/NotFound";
 import { TableProduct } from "../Table/TableProduct";
+import { useProducts } from "../hooks/products/useProducts";
+import { LoadingSpinner } from "../loadingspinner/LoadingSpinner";
+import { NotFound } from "../notfound/NotFound";
+import { TableBody } from "../table/TableBody";
+import { TableHeader } from "../table/TableHeader";
+import { TableRow } from "../table/TableRow";
 
 function ProductsTable() {
   const { Data: { data: products = [], totalProducts = 0 } = {}, isLoading } =
