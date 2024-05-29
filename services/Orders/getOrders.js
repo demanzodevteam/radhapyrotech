@@ -1,7 +1,7 @@
 import { api_url } from "@/helpers/constants";
 import { buildURL } from "../urlGenerator/urlGenerator";
 
-export const getOrders = async (queryParams) => {
+const getOrders = async (queryParams) => {
   try {
     if (!api_url) return [];
     const baseUrl = `${api_url}/api/orders`;
@@ -20,3 +20,32 @@ export const getOrders = async (queryParams) => {
     return [];
   }
 };
+
+const createOrder = async (data) => {
+  try {
+    if (!api_url) return [];
+    const baseUrl = `${api_url}/api/orders`;
+    const response = await fetch(baseUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw new Error(errorResponse.message || 'Failed to create order');
+    }
+
+    const responseData = await response.json();
+    console.log('Order created successfully:', responseData);
+    return responseData;
+  } catch (error) { 
+    console.error('Error creating order:', error);
+    throw error;
+  }
+  
+}
+
+export {getOrders, createOrder}

@@ -39,9 +39,7 @@ export async function GET(request) {
       orderBy: {
         id: "desc",
       },
-      include: {
-        OrderedProduct: true,
-      },
+
       skip: (page - 1) * pageSize,
       take: pageSize,
     });
@@ -117,4 +115,26 @@ export async function PUT(request) {
       message: "updated successfully",
     })
   );
+}
+
+export async function POST(request) {
+
+  try {
+    const data = await request.json();
+    const newOrder = await prisma.order.create({
+      data: data,
+    });
+    return new Response(
+    JSON.stringify({
+      status: 200,
+      message: "Order Placed successfully",
+      data: newOrder,
+    })
+  );
+  } catch (error) {
+    console.log(`post error: ${error.message}`);
+    return new Response(`Webhook error: ${error.message}`, {
+      status: 400,
+    });
+  }
 }

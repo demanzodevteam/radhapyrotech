@@ -27,8 +27,8 @@ const ShowProducts = ({ productData }) => {
                 </td>
                 <td className="mx-4 py-2 text-xs">{product?.quantity}</td>
                 <td className="mx-4 py-2 text-xs">
-                  {Number(product?.quantity) *
-                    Number(product?.product_selling_price)}
+                  {(Number(product?.quantity) *
+                    Number(product?.product_selling_price)).toFixed(2)}
                 </td>
               </tr>
             );

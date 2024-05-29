@@ -5,6 +5,7 @@ import { DarkModeProvider } from "@/darkmodecontext/DarkModeProvider";
 import { Toaster } from "react-hot-toast";
 import { DashboardContextProvider } from "@/dashboardcontext/DashboardContextProvider";
 import { OrderFilterProvider } from "./Context/OrderContext/OrderContextProvider";
+import { CartProvider } from "./Context/CartContext/CartContext";
 
 const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
@@ -32,7 +33,9 @@ export default function RootLayout({ children }) {
         <DashboardContextProvider>
           <DarkModeProvider>
             <TanstackProvider>
-              <OrderFilterProvider>{children}</OrderFilterProvider>
+              <OrderFilterProvider>
+                <CartProvider>{children}</CartProvider>
+              </OrderFilterProvider>
             </TanstackProvider>
           </DarkModeProvider>
         </DashboardContextProvider>

@@ -43,7 +43,7 @@ const PdfInvoice = ({ order }) => (
             <Text style={styles.tableHeader}>Quantity</Text>
             <Text style={styles.tableHeader}>Total Price</Text>
           </View>
-          {order.ordered_products?.map((product, index) => (
+          {order.OrderedProduct?.map((product, index) => (
             <View key={index} style={styles.tableRow}>
               <Text style={styles.tableData}>{index + 1}</Text>
               <Text style={styles.tableData}>{product?.product_code}</Text>
@@ -53,8 +53,8 @@ const PdfInvoice = ({ order }) => (
               </Text>
               <Text style={styles.tableData}>{product?.quantity}</Text>
               <Text style={styles.tableData}>
-                {Number(product?.quantity) *
-                  Number(product?.product_selling_price)}
+                {(Number(product?.quantity) *
+                  Number(product?.product_selling_price)).toFixed(2)}
               </Text>
             </View>
           ))}

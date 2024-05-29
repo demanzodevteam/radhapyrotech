@@ -66,7 +66,7 @@ function OrderTableRow({ data }) {
               <span>
                 <button
                   onClick={() => {
-                    showInvoice(data);
+                    showInvoice(order);
                   }}
                 >
                   <div className="flex gap-2 items-center">

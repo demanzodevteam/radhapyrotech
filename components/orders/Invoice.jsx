@@ -7,12 +7,17 @@ import { RiFileDownloadFill } from "react-icons/ri";
 
 const Invoice = ({ order }) => {
   const [isClient, setIsClient] = useState(false);
+  const [fileName, setFileName] = useState("");
+
   useEffect(() => {
     setIsClient(true);
-  }, []);
-  const fileName = `${order?.id}_${order?.customer_name}_${formatDate(
-    order?.order_date
-  )}`;
+    setFileName(
+      `${order.id}_${order.customer_name}_${formatDate(order?.order_date)}`
+    );
+  }, [order]);
+  // const fileName = `${order.id}_${order.customer_name}_${formatDate(
+  //   order?.order_date
+  // )}`;
   return (
     <>
       <div className="grid grid-cols-3 place-content-center mb-6">
@@ -66,7 +71,7 @@ const Invoice = ({ order }) => {
             </tr>
           </thead>
           <tbody>
-            {order.ordered_products?.map((product, index) => {
+            {order.OrderedProduct?.map((product, index) => {
               return (
                 <tr key={index} className="py-2 border-y-2">
                   <td className="mx-4 py-2 text-xs ">{index + 1}</td>
@@ -81,8 +86,8 @@ const Invoice = ({ order }) => {
                   </td>
                   <td className="mx-4 py-2 text-xs">{product?.quantity}</td>
                   <td className="mx-4 py-2 text-xs">
-                    {Number(product?.quantity) *
-                      Number(product?.product_selling_price)}
+                    {(Number(product?.quantity) *
+                      Number(product?.product_selling_price)).toFixed(2)}
                   </td>
                 </tr>
               );
@@ -90,23 +95,6 @@ const Invoice = ({ order }) => {
           </tbody>
         </table>
         <h3 className="pt-6 text-right">Total Price : {order.total_price} </h3>
-      </div>
-      <div className="grid grid-cols-3 place-content-center mb-6">
-        {isClient && (
-          <div>
-            <div className="rounded-md border-2 p-2 w-12 flex justify-center items-center">
-              <PDFDownloadLink
-                document={<PdfInvoice order={order} />}
-                fileName={fileName}
-              >
-                <RiFileDownloadFill className="text-[1.5rem]" />
-              </PDFDownloadLink>
-            </div>
-          </div>
-        )}
-        <div>
-          <h1 className="text-center font-bold text-[1.5rem] mb-8">Invoice</h1>
-        </div>
       </div>
     </>
   );
