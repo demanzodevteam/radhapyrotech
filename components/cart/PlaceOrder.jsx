@@ -14,22 +14,23 @@ const PlaceOrder = () => {
     customers_state: null,
     customer_city: null,
     customer_pincode: null,
-    total_price: totalPrice,
     delivery_instructions: null,
     OrderedProduct: cart,
   });
-
+  // console.log(formData.total_price);
   const handleChange = (e) => {
     setFormData({
       ...formData,
+      total_price: totalPrice,
       [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(`formData ${JSON.stringify(formData)}`);
     const orderResponse = await createOrder(formData);
-    console.log(orderResponse);
+    // console.log(orderResponse);
     if (orderResponse.status == 200) {
       toast.success(orderResponse.message);
       resetCart();
@@ -57,8 +58,8 @@ const PlaceOrder = () => {
       <hr />
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 gap-4 pt-4">
-          <div className="grid grid-cols-3">
-            <label>Customer Name :</label>
+          <div className="grid lg:grid-cols-3">
+            <label htmlFor="customer_name">Customer Name :</label>
             <input
               className="focus:outline-none border-2 rounded-lg col-span-2 py-1 px-4"
               type="text"
@@ -67,8 +68,8 @@ const PlaceOrder = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="grid grid-cols-3">
-            <label>Customer Phone : </label>
+          <div className="grid lg:grid-cols-3">
+            <label htmlFor="customer_phone">Customer Phone : </label>
             <input
               className="focus:outline-none border-2 rounded-lg col-span-2 py-1 px-4"
               type="tel"
@@ -77,8 +78,8 @@ const PlaceOrder = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="grid grid-cols-3">
-            <label>Customer Email : </label>
+          <div className="grid lg:grid-cols-3">
+            <label htmlFor="customer_Email">Customer Email : </label>
             <input
               className="focus:outline-none border-2 rounded-lg col-span-2 py-1 px-4"
               type="email"
@@ -87,8 +88,8 @@ const PlaceOrder = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="grid grid-cols-3">
-            <label>Customer Address : </label>
+          <div className="grid lg:grid-cols-3">
+            <label htmlFor="customer_address">Customer Address : </label>
             <input
               className="focus:outline-none border-2 rounded-lg col-span-2 py-1 px-4"
               type="text"
@@ -97,8 +98,8 @@ const PlaceOrder = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="grid grid-cols-3">
-            <label>Landmark : </label>
+          <div className="grid lg:grid-cols-3">
+            <label htmlFor="landmark">Landmark : </label>
             <input
               className="focus:outline-none border-2 rounded-lg col-span-2 py-1 px-4"
               type="text"
@@ -107,8 +108,8 @@ const PlaceOrder = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="grid grid-cols-3">
-            <label for="customers_state">Customer State : </label>
+          <div className="grid lg:grid-cols-3">
+            <label htmlFor="customers_state">Customer State : </label>
             <input
               className="focus:outline-none border-2 rounded-lg col-span-2 py-1 px-4"
               type="text"
@@ -117,8 +118,8 @@ const PlaceOrder = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="grid grid-cols-3">
-            <label>Customer City : </label>
+          <div className="grid lg:grid-cols-3">
+            <label htmlFor="customer_city">Customer City : </label>
             <input
               className="focus:outline-none border-2 rounded-lg col-span-2 py-1 px-4"
               type="text"
@@ -127,8 +128,8 @@ const PlaceOrder = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="grid grid-cols-3">
-            <label>Customer Pincode : </label>
+          <div className="grid lg:grid-cols-3">
+            <label htmlFor="customer_pincode">Customer Pincode : </label>
             <input
               className="focus:outline-none border-2 rounded-lg col-span-2 py-1 px-4"
               type="text"
@@ -137,8 +138,8 @@ const PlaceOrder = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="grid grid-cols-3 items-center">
-            <label>Notes : </label>
+          <div className="grid lg:grid-cols-3 items-center">
+            <label htmlFor="delivery_instructions">Notes : </label>
             <textarea
               className="focus:outline-none border-2 rounded-lg col-span-2 py-1 h-24 px-4"
               type="text"

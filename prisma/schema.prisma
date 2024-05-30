@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -11,17 +11,19 @@ model Product {
   id                    Int        @id @default(autoincrement())
   product_code          Int        @unique
   product_name          String
+  product_piece         Int
+  product_box           Int
   product_reqular_price Float
   product_selling_price Float
   product_image         String?
   product_status        Boolean    @default(true)
-  product_categories    Category[] @relation("CategoryToProduct")
+  product_categories    Category[] 
 }
 
 model Category {
   id            Int       @id @default(autoincrement())
   category_name String    @unique
-  products      Product[] @relation("CategoryToProduct")
+  products      Product[]
 }
 
 model Order {
@@ -45,4 +47,21 @@ enum OrderStatus {
   pending
   confirmed
   cancelled
+}
+
+model User {
+  id        String   @id @default(cuid())
+  firstname String
+  lastname  String
+  password  String
+  email     String   @unique
+  image     String?
+  role      Role     @default(Admin)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  Admin
+  Manager
 }

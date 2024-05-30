@@ -51,9 +51,9 @@ export default function RootLayout({ children }) {
               duration: 5000,
             },
             style: {
-              fontSize: "16px",
-              maxWidth: "500px",
-              padding: "16px 24px",
+              fontSize: '16px',
+              maxWidth: '600px',
+              padding: '16px 24px',
               // backgroundColor: "bg-slate",
               // color: "var(--color-gray-700)",
             },

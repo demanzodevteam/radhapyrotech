@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import "./pagination.css";
+import { useOrderFilter } from "@/app/Context/OrderContext/OrderContextProvider";
 const Pagination = ({ postMeta, className, currentPath }) => {
   const [currentPage, setCurrentPage] = useState(postMeta?.currentPage);
   const [totalPages, setTotalPages] = useState(postMeta?.totalPages);
+  const { updatePage } = useOrderFilter();
   useEffect(() => {
     setTotalPages(postMeta?.totalPages);
     setCurrentPage(postMeta?.currentPage);
@@ -13,8 +15,8 @@ const Pagination = ({ postMeta, className, currentPath }) => {
 
   const handleClick = (page) => {
     setCurrentPage(page);
-    const url = page === 1 ? `${currentPath}` : `${currentPath}?page=${page}`;
-    window.location.href = url;
+    // const url = page === 1 ? `${currentPath}` : `${currentPath}?page=${page}`;
+    updatePage(page);
   };
 
   let startPage = Math.max(1, currentPage - 1);

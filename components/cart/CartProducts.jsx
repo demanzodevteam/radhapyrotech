@@ -56,7 +56,7 @@ const CartProduct = () => {
                   ₹{product.product_selling_price}
                 </span>
               </div>
-              <div className="grid grid-cols-2 items-center pt-6">
+              <div className="lg:grid flex flex-col gap-4  lg:grid-cols-2 items-center pt-6">
                 <div className="flex gap-4 items-center">
                   <span>Qty:</span>
                   <div className="flex gap-1">

@@ -4,7 +4,7 @@ import { buildURL } from "../urlGenerator/urlGenerator";
 const getOrders = async (queryParams) => {
   try {
     if (!api_url) return [];
-    const baseUrl = `${api_url}/api/orders`;
+    const baseUrl = `${api_url}/orders`;
     const url = buildURL(baseUrl, queryParams);
 
     const res = await fetch(url);
@@ -24,28 +24,27 @@ const getOrders = async (queryParams) => {
 const createOrder = async (data) => {
   try {
     if (!api_url) return [];
-    const baseUrl = `${api_url}/api/orders`;
+    const baseUrl = `${api_url}/orders`;
     const response = await fetch(baseUrl, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
 
     if (!response.ok) {
       const errorResponse = await response.json();
-      throw new Error(errorResponse.message || 'Failed to create order');
+      throw new Error(errorResponse.message || "Failed to create order");
     }
 
     const responseData = await response.json();
-    console.log('Order created successfully:', responseData);
+    console.log("Order created successfully:", responseData);
     return responseData;
-  } catch (error) { 
-    console.error('Error creating order:', error);
+  } catch (error) {
+    console.error("Error creating order:", error);
     throw error;
   }
-  
-}
+};
 
-export {getOrders, createOrder}
+export { getOrders, createOrder };

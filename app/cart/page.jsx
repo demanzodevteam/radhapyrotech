@@ -12,10 +12,10 @@ export default function Cart() {
   const { totalPrice } = useContext(CartContext);
 
   return (
-    <div className="mx-24 my-14">
+    <div className="mx-4 lg:mx-24 my-14">
       <TableOperations>
         <h2 className="text-2xl font-medium">Shopping Cart</h2>
-        <div className="grid grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <CartProduct />
           <PlaceOrder />
         </div>

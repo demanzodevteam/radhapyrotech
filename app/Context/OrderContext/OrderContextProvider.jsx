@@ -54,7 +54,7 @@ export const OrderFilterProvider = ({ children }) => {
     Cookies.remove("status");
     Cookies.remove("startDate");
     Cookies.remove("endDate");
-    window.location.href = "/dashboard/orders";
+    // window.location.href = "/dashboard/orders";
   };
 
   const closeModal = () => {
@@ -94,6 +94,12 @@ export const OrderFilterProvider = ({ children }) => {
       type: "invoice",
     });
   };
+  const updatePage = (page) => {
+    setQueryParam({
+      ...queryParam,
+      page,
+    });
+  };
 
   return (
     <OrderFilterContext.Provider
@@ -105,6 +111,7 @@ export const OrderFilterProvider = ({ children }) => {
         showInvoice,
         orderModal,
         closeModal,
+        updatePage,
       }}
     >
       {children}

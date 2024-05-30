@@ -28,7 +28,7 @@ function Select({
         <option value={defaultValue}>{firstLabel}</option>
         {loading
           ? null
-          : optionsData.length > 0
+          : optionsData?.length > 0
           ? optionsData.map(render)
           : notfoundText && <option>{notfoundText}</option>}
       </select>
