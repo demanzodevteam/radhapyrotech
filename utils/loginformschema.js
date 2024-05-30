@@ -1,12 +1,5 @@
 import { z } from 'zod';
 
-const MAX_FILE_SIZE = 500000;
-const ACCEPTED_IMAGE_TYPES = [
-  'image/jpeg',
-  'image/jpg',
-  'image/png',
-  'image/webp',
-];
 const loginSchema = z
   .object({
     firstname: z
@@ -20,6 +13,7 @@ const loginSchema = z
       .max(45, 'Last Name Must be Less Than 45 Characters')
       .regex(new RegExp('^[a-zA-Z]+$'), 'No Special Characters Allowed'),
     email: z.string().email('Please Enter the Valid Email Address'),
+    role: z.enum(['Admin', 'Manager']),
     image: z.any().optional(),
     password: z
       .string()
@@ -35,4 +29,14 @@ const loginSchema = z
     path: ['confirmpassword'],
   });
 
-export { loginSchema };
+// Custom validation function using Zod
+const validateRole = (value) => {
+  try {
+    RoleSchema.parse(value);
+    return true;
+  } catch (error) {
+    return 'Invalid role';
+  }
+};
+
+export { loginSchema, validateRole };
