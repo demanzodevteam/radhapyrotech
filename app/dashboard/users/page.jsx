@@ -1,8 +1,9 @@
-'use client';
-
+import Link from 'next/link';
 import { CategoryTableFiltersWrapper } from '@/components/tablefilters/CategoryTableFiltersWrapper';
 import { TableOperations } from '@/components/tableoperations/TableOperations';
-import Link from 'next/link';
+import { Suspense } from 'react';
+import { UserTable } from '@/components/auth/UserTable';
+import { LoadingSpinner } from '@/components/loadingspinner/LoadingSpinner';
 
 function UsersPage() {
   return (
@@ -18,6 +19,9 @@ function UsersPage() {
           </Link>
         </CategoryTableFiltersWrapper>
       </TableOperations>
+      <Suspense fallback={<LoadingSpinner />}>
+        <UserTable />
+      </Suspense>
     </div>
   );
 }
