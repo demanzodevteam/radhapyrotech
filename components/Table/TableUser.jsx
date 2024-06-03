@@ -1,6 +1,4 @@
-import { CategoryPagination } from '../pagination/categories/CategoryPagination';
-
-function TableCategory({ children, count }) {
+export function TableUser({ children, count = 0 }) {
   return (
     <section className='container mx-auto '>
       <div className='w-full  overflow-hidden rounded-t shadow dark:border dark:border-gray-600 dark:border-solid'>
@@ -8,9 +6,7 @@ function TableCategory({ children, count }) {
           <table className='w-full bg-white dark:bg-gray-800'>{children}</table>
         </div>
       </div>
-      <CategoryPagination count={count} />
+      {/* <CategoryPagination count={count} /> */}
     </section>
   );
 }
-
-export { TableCategory };
