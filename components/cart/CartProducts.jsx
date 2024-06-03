@@ -1,3 +1,4 @@
+// "use client";
 import { CartContext } from "@/app/Context/CartContext/CartContext";
 import { useContext } from "react";
 import Image from "next/image";
@@ -19,23 +20,25 @@ const CartProduct = () => {
     totalPrice,
     inputQuantity,
   } = useContext(CartContext);
+  console.log(`cart ${JSON.stringify(cart)}`);
   return (
     <div className="col-span-3 flex flex-col gap-4">
       {cart.length < 1 && (
         <div className="text-center border-l p-4">No Products in your cart</div>
       )}
-      {cart.map((product, index) => {
+      {cart.map((product) => {
         return (
           <div
             className="grid grid-cols-5 gap-4 h-fit rounded-lg border-2 items-center p-4"
-            key={index}
+            key={product.id}
           >
             <div className="col-span-1">
               <Image
-                src={product.product_image_url}
+                src={product.product_image}
                 alt="product"
                 width={300}
                 height={300}
+                priority={true}
               />
             </div>
             <div className="col-span-4 border-l-2 pl-4">
@@ -48,8 +51,8 @@ const CartProduct = () => {
               <div className="flex gap-4 text-xl">
                 <span className="line-through text-red-600">
                   ₹
-                  {product.product_regular_price
-                    ? product.product_regular_price
+                  {product.product_reqular_price
+                    ? product.product_reqular_price
                     : ""}
                 </span>
                 <span className="text-green-600">
@@ -59,7 +62,7 @@ const CartProduct = () => {
               <div className="lg:grid flex flex-col gap-4  lg:grid-cols-2 items-center pt-6">
                 <div className="flex gap-4 items-center">
                   <span>Qty:</span>
-                  <div className="flex gap-1">
+                  <div className="flex gap-1 ">
                     <button
                       onClick={() => increaseQuantity(product.id)}
                       className="border-2 rounded-md py-2 px-4"
@@ -69,7 +72,7 @@ const CartProduct = () => {
                     <input
                       type="number"
                       min={1}
-                      className="border-2 rounded-md py-2 px-4 w-11 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none focus:outline-none"
+                      className="border-2 rounded-md py-2 px-4 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none max-w-24 w-fit text-center min-w-11 focus:outline-none"
                       value={product.quantity}
                       onChange={(e) =>
                         inputQuantity(product.id, e.target.value)

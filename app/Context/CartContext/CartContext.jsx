@@ -1,46 +1,31 @@
 "use client";
 
 import React, { createContext, useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 export const CartContext = createContext();
-const products = [
-  {
-    id: 1,
-    product_code: "P001",
-    product_name: "Product 1",
-    product_selling_price: 24.95,
-    product_regular_price: 29.95,
-    quantity: 2,
-    product_image_url: "https://via.placeholder.com/500",
-  },
-  {
-    id: 2,
-    product_code: "P002",
-    product_name: "Product 2",
-    product_selling_price: 49.95,
-    product_regular_price: 59.95,
-    quantity: 1,
-    product_image_url: "https://via.placeholder.com/500",
-  },
-  {
-    id: 3,
-    product_code: "P003",
-    product_name: "Product 3",
-    product_selling_price: 19.95,
-    product_regular_price: 24.95,
-    quantity: 3,
-    product_image_url: "https://via.placeholder.com/500",
-  },
-];
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState(products);
+  const [cart, setCart] = useState(() => {
+    try {
+      const cookieCart = Cookies.get("cart");
+      return cookieCart ? JSON.parse(cookieCart) : [];
+    } catch (error) {
+      console.error("Error parsing cookie cart:", error);
+      return [];
+    }
+  });
   const [totalPrice, setTotalPrice] = useState(0);
 
   const updateTotalPrice = (totalPrice) => {
     setTotalPrice(totalPrice);
   };
+
   useEffect(() => {
+    // Save cart to cookies whenever it changes
+    Cookies.set("cart", JSON.stringify(cart));
+
+    // Update total price
     let total = 0;
     cart.forEach((item) => {
       total += item.product_selling_price * item.quantity;
@@ -50,15 +35,19 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (product) => {
     setCart((prevCart) => {
+      const updatedCart = [...prevCart];
       const existingProductIndex = prevCart.findIndex(
         (item) => item.id === product.id
       );
       if (existingProductIndex !== -1) {
-        const updatedCart = [...prevCart];
-        updatedCart[existingProductIndex].quantity += 1;
+        updatedCart[existingProductIndex] = {
+          ...updatedCart[existingProductIndex],
+          quantity: Number(updatedCart[existingProductIndex].quantity) + 1,
+        };
         return updatedCart;
+      } else {
+        return [...prevCart, { ...product, quantity: 1 }];
       }
-      return [...prevCart, { ...product, quantity: 1 }];
     });
   };
 
@@ -75,7 +64,7 @@ export const CartProvider = ({ children }) => {
       if (productIndex !== -1) {
         updatedCart[productIndex] = {
           ...updatedCart[productIndex],
-          quantity: updatedCart[productIndex].quantity + 1,
+          quantity: Number(updatedCart[productIndex].quantity) + 1,
         };
       }
       return updatedCart;
@@ -97,6 +86,7 @@ export const CartProvider = ({ children }) => {
       return updatedCart;
     });
   };
+
   const inputQuantity = (productId, value) => {
     setCart((prevCart) => {
       const updatedCart = [...prevCart];
@@ -112,6 +102,7 @@ export const CartProvider = ({ children }) => {
       return updatedCart;
     });
   };
+
   const resetCart = () => {
     setCart([]);
     setTotalPrice(0);

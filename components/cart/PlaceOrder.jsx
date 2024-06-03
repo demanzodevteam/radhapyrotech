@@ -1,3 +1,4 @@
+"use client";
 import { CartContext } from "@/app/Context/CartContext/CartContext";
 import { createOrder } from "@/services/Orders/getOrders";
 import { useContext, useState } from "react";
