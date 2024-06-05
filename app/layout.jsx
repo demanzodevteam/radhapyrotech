@@ -1,11 +1,10 @@
-import { Noto_Sans, Nunito_Sans } from "next/font/google";
-import "./globals.css";
 import { TanstackProvider } from "@/components/tanstack_provider/TanstackProvider";
 import { DarkModeProvider } from "@/darkmodecontext/DarkModeProvider";
-import { Toaster } from "react-hot-toast";
 import { DashboardContextProvider } from "@/dashboardcontext/DashboardContextProvider";
-import { OrderFilterProvider } from "./Context/OrderContext/OrderContextProvider";
+import { Noto_Sans, Nunito_Sans } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import { CartProvider } from "./Context/CartContext/CartContext";
+import "./globals.css";
 
 const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
@@ -33,9 +32,7 @@ export default function RootLayout({ children }) {
         <DashboardContextProvider>
           <DarkModeProvider>
             <TanstackProvider>
-              <OrderFilterProvider>
-                <CartProvider>{children}</CartProvider>
-              </OrderFilterProvider>
+              <CartProvider>{children}</CartProvider>
             </TanstackProvider>
           </DarkModeProvider>
         </DashboardContextProvider>
@@ -51,9 +48,9 @@ export default function RootLayout({ children }) {
               duration: 5000,
             },
             style: {
-              fontSize: '16px',
-              maxWidth: '600px',
-              padding: '16px 24px',
+              fontSize: "16px",
+              maxWidth: "600px",
+              padding: "16px 24px",
               // backgroundColor: "bg-slate",
               // color: "var(--color-gray-700)",
             },

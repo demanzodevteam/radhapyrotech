@@ -5,6 +5,7 @@ import { TanstackProvider } from "@/components/tanstack_provider/TanstackProvide
 import { DarkModeProvider } from "@/darkmodecontext/DarkModeProvider";
 import { DashboardContextProvider } from "@/dashboardcontext/DashboardContextProvider";
 import { useDashboardContext } from "@/dashboardcontext/useDashboardContext";
+import { OrderFilterProvider } from "../Context/OrderContext/OrderContextProvider";
 import { Toaster } from "react-hot-toast";
 
 export default function DashboardLayout({ children }) {
@@ -21,7 +22,9 @@ export default function DashboardLayout({ children }) {
         <DarkModeProvider>
           <TanstackProvider>
             <DashboardContextProvider>
-              <DarkModeProvider>{children}</DarkModeProvider>
+              <OrderFilterProvider>
+                <DarkModeProvider>{children}</DarkModeProvider>
+              </OrderFilterProvider>
             </DashboardContextProvider>
           </TanstackProvider>
         </DarkModeProvider>
@@ -38,9 +41,9 @@ export default function DashboardLayout({ children }) {
               duration: 5000,
             },
             style: {
-              fontSize: '16px',
-              maxWidth: '500px',
-              padding: '16px 16px',
+              fontSize: "16px",
+              maxWidth: "500px",
+              padding: "16px 16px",
               // backgroundColor: "bg-slate",
               // color: "var(--color-gray-700)",
             },

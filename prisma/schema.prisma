@@ -17,13 +17,14 @@ model Product {
   product_selling_price Float
   product_image         String?
   product_status        Boolean    @default(true)
-  product_categories    Category[] 
+  slug                  String     @unique
+  product_categories    Category[] @relation("CategoryToProduct")
 }
 
 model Category {
   id            Int       @id @default(autoincrement())
   category_name String    @unique
-  products      Product[]
+  products      Product[] @relation("CategoryToProduct")
 }
 
 model Order {
@@ -39,14 +40,8 @@ model Order {
   order_date            DateTime    @default(now())
   total_price           Decimal     @db.Decimal(10, 2)
   status                OrderStatus @default(pending)
-  delivery_instructions String?     @db.VarChar(600)
   OrderedProduct        Json
-}
-
-enum OrderStatus {
-  pending
-  confirmed
-  cancelled
+  delivery_instructions String?     @db.VarChar(600)
 }
 
 model User {
@@ -56,9 +51,15 @@ model User {
   password  String
   email     String   @unique
   image     String?
-  role      Role     @default(Admin)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  role      Role     @default(Admin)
+}
+
+enum OrderStatus {
+  pending
+  confirmed
+  cancelled
 }
 
 enum Role {

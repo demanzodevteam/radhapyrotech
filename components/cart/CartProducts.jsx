@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 import { CartContext } from "@/app/Context/CartContext/CartContext";
 import { useContext } from "react";
 import Image from "next/image";
@@ -20,7 +20,7 @@ const CartProduct = () => {
     totalPrice,
     inputQuantity,
   } = useContext(CartContext);
-  console.log(`cart ${JSON.stringify(cart)}`);
+  // console.log(`cart ${JSON.stringify(cart)}`);
   return (
     <div className="col-span-3 flex flex-col gap-4">
       {cart.length < 1 && (
