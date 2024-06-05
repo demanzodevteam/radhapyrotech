@@ -5,8 +5,9 @@ export async function getUserbyId(id) {
     if (!api_url) return [];
 
     const userId = await id;
+    console.log(userId);
 
-    const res = await fetch(`${api_url}/user/readbyId/${userId}`);
+    const res = await fetch(`${api_url}/user/readbyid/${userId}`);
 
     if (!res.ok) {
       const errorData = await res.json();
@@ -14,6 +15,7 @@ export async function getUserbyId(id) {
     }
 
     const data = await res.json();
+    console.log(data);
     return data;
   } catch (error) {
     throw new Error(error.message);

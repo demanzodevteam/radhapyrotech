@@ -64,8 +64,8 @@ function CreateProductForm({ onCloseModal }) {
           {...register('product_code', {
             required: 'Please Enter The Product code',
             minLength: {
-              value: 2,
-              message: 'A valid product code must be 2 character in length',
+              value: 3,
+              message: 'A valid product code must be 3 character in length',
             },
           })}
         />

@@ -52,7 +52,7 @@ export async function PUT(req, { params }) {
       product_categories: categories,
     };
 
-    console.log('Updating product with data:', updateProduct);
+    // console.log('Updating product with data:', updateProduct);
 
     // Update product in database
     const res = await prisma.product.update({
