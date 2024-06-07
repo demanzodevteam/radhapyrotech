@@ -8,12 +8,34 @@ export async function getCategories({
   try {
     if (!api_url) return [];
 
+    // let res;
+
+    // res = await fetch(`${api_url}/categories/read`);
+
+    // if (categoryPage !== 1) {
+    //   console.log(categoryPage);
+    //   res = await fetch(
+    //     `${api_url}/categories/read?categorypage=${categoryPage}`
+    //   );
+    // }
+    // if (categorySearch.length >= 3 && categorySearch !== '') {
+    //   res = await fetch(
+    //     `${api_url}/categories/read?categorysearch=${categorySearch}`
+    //   );
+    // }
+
+    // if (categoryEntries !== 'default') {
+    //   res = await fetch(
+    //     `${api_url}/categories/read?categoryentries=${categoryEntries}`
+    //   );
+    // }
+
     const res = await fetch(
       `${api_url}/categories/read?categoryentries=${categoryEntries}&categorysearch=${categorySearch}&categorypage=${categoryPage}`
     );
 
-    // check res is ok
     if (!res.ok) {
+      // check res is ok
       const errorData = await res.json();
       throw new Error(errorData.error || 'Failed To Fetch Categories');
     }

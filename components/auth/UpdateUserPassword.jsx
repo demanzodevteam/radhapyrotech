@@ -1,11 +1,13 @@
 'use client';
 
+import { updateUserPasswordSchema } from '@/utils/updateuserformschema';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
-import { useUserbyId } from '../hooks/users/useUserbyId';
+import { useUpdateuserpassword } from '../hooks/users/useUpdateuserpassword';
 
-function UpdateUserPassword() {
+function UpdateUserPassword({ userId }) {
   const [showPass, setshowPass] = useState(false);
 
   // password field show action
@@ -13,17 +15,44 @@ function UpdateUserPassword() {
     setshowPass((isvisiblePass) => !isvisiblePass);
   }
 
-  // get user details
-  const { isLoading, user } = useUserbyId();
-  // console.log(user);
-
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: zodResolver(updateUserPasswordSchema),
+  });
+
+  // make a request to update the user password
+  const { updatepassword, isPending } = useUpdateuserpassword();
+
+  function handlePasswordSubmission(data) {
+    const { confirmpassword, password } = data;
+    // make request
+    if (userId) {
+      updatepassword(
+        {
+          id: userId,
+          updatePassword: password,
+        },
+        {
+          onSuccess: () => {
+            reset();
+          },
+          onError: () => {
+            reset();
+          },
+        }
+      );
+    }
+  }
+
   return (
-    <form className='flex flex-col md:grid md:grid-cols-2 dark:text-white select-none  gap-y-3 gap-x-6'>
+    <form
+      onSubmit={handleSubmit(handlePasswordSubmission)}
+      className='flex flex-col md:grid md:grid-cols-2 dark:text-white select-none  gap-y-3 gap-x-6'
+    >
       <div className='flex flex-col gap-2 col-span-2'>
         <label
           className='text-gray-800 capitalize dark:text-white text-base'
@@ -42,11 +71,13 @@ function UpdateUserPassword() {
 
           {showPass ? (
             <IoIosEye
+              type='button'
               onClick={handlePasswordVisible}
               className='text-xl md:text-2xl cursor-pointer absolute right-3 top-3 md:top-[10px] dark:text-white'
             />
           ) : (
             <IoIosEyeOff
+              type='button'
               className='text-xl md:text-2xl cursor-pointer absolute right-3 top-3 md:top-[10px] dark:text-white'
               onClick={handlePasswordVisible}
             />
@@ -89,11 +120,11 @@ function UpdateUserPassword() {
             Cancel
           </button>
           <button
-            // disabled={isPending}
+            disabled={isPending}
             className='px-6 py-2 bg-primary hover:bg-primary hover:bg-opacity-90 rounded-md text-white text-base'
             type='submit'
           >
-            {/* {isPending ? 'Creating...' : 'Create'} */} Update Password
+            {isPending ? 'Updating...' : 'Update Password'}
           </button>
         </div>
       </div>

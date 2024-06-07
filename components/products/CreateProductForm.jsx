@@ -193,7 +193,7 @@ function CreateProductForm({ onCloseModal }) {
             className='px-6 py-2 bg-primary hover:bg-primary hover:bg-opacity-90 rounded-md text-white text-base'
             type='submit'
           >
-            Create
+           {isPending ? 'Creating...':'Create'}
           </button>
         </div>
       </div>

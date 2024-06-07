@@ -1,55 +1,22 @@
-"use client";
-import { Header } from "@/components/header/Header";
-import { Sidebar } from "@/components/sidebar/Sidebar";
-import { TanstackProvider } from "@/components/tanstack_provider/TanstackProvider";
-import { DarkModeProvider } from "@/darkmodecontext/DarkModeProvider";
-import { DashboardContextProvider } from "@/dashboardcontext/DashboardContextProvider";
-import { useDashboardContext } from "@/dashboardcontext/useDashboardContext";
-import { OrderFilterProvider } from "../Context/OrderContext/OrderContextProvider";
-import { Toaster } from "react-hot-toast";
+import { DashboardWrapper } from '@/components/dashboardwrapper/DashboardWrapper';
+import { Header } from '@/components/header/Header';
+import { Sidebar } from '@/components/sidebar/Sidebar';
+import { OrderFilterProvider } from '../Context/OrderContext/OrderContextProvider';
+import { DashboardContextProvider } from '@/dashboardcontext/DashboardContextProvider';
+import { DarkModeProvider } from '@/darkmodecontext/DarkModeProvider';
 
 export default function DashboardLayout({ children }) {
-  const { showSidebar, handleOpen, handleClose } = useDashboardContext();
   return (
-    <div
-      className={`grid grid-cols-1 ${
-        showSidebar ? "md:grid-cols-15/1fr" : "grid-cols-1"
-      }  grid-rows-auto/1fr h-auto md:h-screen`}
-    >
-      <Sidebar />
-      <Header />
-      <main className="md:overflow-y-scroll pt-6 md:pt-8 pb-4 px-4 md:px-[3rem] font-sans dark:text-white bg-gray-100 dark:bg-gray-800 ">
-        <DarkModeProvider>
-          <TanstackProvider>
-            <DashboardContextProvider>
-              <OrderFilterProvider>
-                <DarkModeProvider>{children}</DarkModeProvider>
-              </OrderFilterProvider>
-            </DashboardContextProvider>
-          </TanstackProvider>
-        </DarkModeProvider>
-
-        <Toaster
-          position="top-center"
-          gutter={12}
-          containerStyle={{ margin: "8px" }}
-          toastOptions={{
-            success: {
-              duration: 3000,
-            },
-            error: {
-              duration: 5000,
-            },
-            style: {
-              fontSize: "16px",
-              maxWidth: "500px",
-              padding: "16px 16px",
-              // backgroundColor: "bg-slate",
-              // color: "var(--color-gray-700)",
-            },
-          }}
-        />
-      </main>
-    </div>
+    <DashboardContextProvider>
+      <DarkModeProvider>
+        <DashboardWrapper>
+          <Sidebar />
+          <Header />
+          <main className='md:overflow-y-scroll pt-6 md:pt-8 pb-4 px-4 md:px-[3rem] font-sans dark:text-white bg-gray-100 dark:bg-gray-800 '>
+            <OrderFilterProvider>{children}</OrderFilterProvider>
+          </main>
+        </DashboardWrapper>
+      </DarkModeProvider>
+    </DashboardContextProvider>
   );
 }

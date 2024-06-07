@@ -16,4 +16,20 @@ const updateUserDataschema = z.object({
   image: z.any().optional(),
 });
 
-export { updateUserDataschema };
+const updateUserPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(6, 'Password Must be 6 characters')
+      .max(50, 'Password Must be 6 characters'),
+    confirmpassword: z
+      .string()
+      .min(6, 'Password Must be 6 characters')
+      .max(50, 'Password Must be 6 characters'),
+  })
+  .refine((data) => data.password === data.confirmpassword, {
+    message: "password & confirm Password doesn't match",
+    path: ['confirmpassword'],
+  });
+
+export { updateUserDataschema, updateUserPasswordSchema };

@@ -29,14 +29,4 @@ const loginSchema = z
     path: ['confirmpassword'],
   });
 
-// Custom validation function using Zod
-const validateRole = (value) => {
-  try {
-    RoleSchema.parse(value);
-    return true;
-  } catch (error) {
-    return 'Invalid role';
-  }
-};
-
-export { loginSchema, validateRole };
+export { loginSchema };

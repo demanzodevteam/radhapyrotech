@@ -66,7 +66,7 @@ function CategoryForm({ onCloseModal }) {
             type='submit'
             disabled={isPending}
           >
-            Create
+            {isPending ? 'Creating...' : 'create'}
           </button>
         </div>
       </form>

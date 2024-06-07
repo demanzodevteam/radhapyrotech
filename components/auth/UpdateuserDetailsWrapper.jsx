@@ -1,5 +1,6 @@
 'use client';
 
+import { notFound } from 'next/navigation';
 import { useUserbyId } from '../hooks/users/useUserbyId';
 import { LoadingSpinner } from '../loadingspinner/LoadingSpinner';
 import { UpdateUserDataForm } from './UpdateUserDataForm';
@@ -9,6 +10,7 @@ function UpdateuserDetailsWrapper() {
   // get user details
   const { isLoading, user } = useUserbyId();
   if (isLoading) return <LoadingSpinner />;
+  if (!user) return notFound();
   return (
     <>
       <h3 className='text-xl font-medium'>Update user data</h3>
@@ -17,7 +19,7 @@ function UpdateuserDetailsWrapper() {
       </div>
       <h3 className='text-xl font-medium'>Update user password</h3>
       <div className='w-full md:max-w-[700px]'>
-        <UpdateUserPassword />
+        <UpdateUserPassword userId={user.id} />
       </div>
     </>
   );

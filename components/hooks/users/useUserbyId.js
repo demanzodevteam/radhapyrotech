@@ -13,7 +13,6 @@ function useUserbyId() {
     queryFn: () => getUserbyId(userId),
     retry: false,
   });
-  console.log(user);
   return { user, isLoading };
 }
 

@@ -7,10 +7,10 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
 
     // pagination
-    const page = Number(searchParams.get('categorypage')) || 1;
+    const page = Number(searchParams?.get('categorypage')) || 1;
 
     // entries
-    const pageSizeParam = searchParams.get('categoryentries') || PAGE_SIZE;
+    const pageSizeParam = searchParams?.get('categoryentries') || PAGE_SIZE;
     let pageSize;
     if (pageSizeParam === 'default') {
       pageSize = PAGE_SIZE;
@@ -20,7 +20,7 @@ export async function GET(req) {
     const from = (page - 1) * pageSize ?? PAGE_SIZE;
 
     // category search
-    const searchValue = searchParams.get('categorysearch') || '';
+    const searchValue = searchParams?.get('categorysearch') || '';
 
     let where = {};
 
@@ -45,6 +45,7 @@ export async function GET(req) {
       { status: 200 }
     );
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { error: 'Failed To Fetch Categories' },
       { status: 500 }

@@ -5,39 +5,37 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { FaArrowRight } from 'react-icons/fa6';
 
-export function CategoryPagination({ count }) {
+export function UsersPagination({ count }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();
 
   // get current page
-  const currentPage = !searchParams.get('categorypage')
+  const currentPage = !searchParams.get('userpage')
     ? 1
-    : Number(searchParams.get('categorypage'));
+    : Number(searchParams.get('userpage'));
 
-  const pageSizeParam = searchParams.get('categoryentries') || PAGE_SIZE;
+  const pageSizeParam = searchParams.get('userentries') || PAGE_SIZE;
   let pageSize;
   if (pageSizeParam === 'default') {
     pageSize = PAGE_SIZE;
   } else {
     pageSize = parseInt(pageSizeParam) || PAGE_SIZE;
   }
-
   const pageCount = Math.ceil(count / pageSize);
-
   const totalPages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
   // actions
   function previousPage() {
     const previous = currentPage !== 1 ? currentPage - 1 : currentPage;
     const params = new URLSearchParams(searchParams);
-    params.set('categorypage', previous);
+    params.set('userpage', previous);
     router.replace(`${pathName}?${params.toString()}`, { scroll: false });
   }
   function nextPage() {
     const next = currentPage === pageCount ? currentPage : currentPage + 1;
     const params = new URLSearchParams(searchParams);
-    params.set('categorypage', next);
+    params.set('userpage', next);
     router.replace(`${pathName}?${params.toString()}`, { scroll: false });
   }
 
@@ -46,7 +44,7 @@ export function CategoryPagination({ count }) {
       return;
     }
     const params = new URLSearchParams(searchParams);
-    params.set('categorypage', page);
+    params.set('userpage', page);
     router.replace(`${pathName}?${params.toString()}`, { scroll: false });
   }
 

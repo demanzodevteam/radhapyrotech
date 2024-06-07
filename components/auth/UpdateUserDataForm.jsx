@@ -2,10 +2,14 @@
 import { useForm } from 'react-hook-form';
 import { FormRow } from '../formrow/FormRow';
 import { useState } from 'react';
+import { useUpdateuserdetails } from '../hooks/users/useUpdateuserdetails';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { updateUserDataschema } from '@/utils/updateuserformschema';
 
 function UpdateUserDataForm({ userDetails }) {
   // get the user details for prefill
-  const { id, ...editValues } = userDetails ?? {};
+  const { id: userId, ...editValues } = userDetails ?? {};
+  const hasEditsession = Boolean(userId);
   // console.log(editValues, id);
 
   // update user details hook
@@ -18,11 +22,39 @@ function UpdateUserDataForm({ userDetails }) {
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: editValues,
+    defaultValues: hasEditsession ? editValues : {},
+    resolver: zodResolver(updateUserDataschema),
   });
 
+  // update user details
+  const { isPending, updateUserdetail } = useUpdateuserdetails();
+
   function handledata(data) {
-    console.log(data);
+    // console.log(data);
+    const formData = new FormData();
+
+    // check user has image
+    const isuserHasimage =
+      data.image === null
+        ? null
+        : typeof data.image === 'string'
+        ? data.image
+        : data.image[0];
+
+    // update the value in form data
+    formData.append('firstname', data.firstname);
+    formData.append('lastname', data.lastname);
+    formData.append('email', data.email);
+    formData.append('role', data.role);
+    formData.append('image', isuserHasimage);
+
+    // make a request
+    if (hasEditsession) {
+      updateUserdetail({
+        id: userId,
+        userData: formData,
+      });
+    }
   }
 
   return (
@@ -89,11 +121,11 @@ function UpdateUserDataForm({ userDetails }) {
             Cancel
           </button>
           <button
-            // disabled={isPending}
+            disabled={isPending}
             className='px-6 py-2 bg-primary hover:bg-primary hover:bg-opacity-90 rounded-md text-white text-base'
             type='submit'
           >
-            {/* {isPending ? 'Creating...' : 'Create'} */}Update Account
+            {isPending ? 'Updating...' : 'Update Account'}
           </button>
         </div>
       </div>
