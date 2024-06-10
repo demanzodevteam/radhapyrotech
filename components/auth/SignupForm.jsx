@@ -1,5 +1,6 @@
 'use client';
-import { loginSchema } from '@/utils/loginformschema';
+
+import { signupSchema } from '@/utils/signupformschema';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Link from 'next/link';
@@ -26,7 +27,7 @@ function SignupForm() {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(signupSchema),
   });
 
   const { createUser, isPending } = useCreateUser();

@@ -1,3 +1,5 @@
+'use client';
+
 import { PopupModal } from '../modal/PopupModal';
 import { CreateProductForm } from './CreateProductForm';
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { CategoryPopupModal } from '../modal/CategoryPopupModal';
 import { CategoryForm } from './CategoryForm';
 

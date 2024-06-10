@@ -1,6 +1,6 @@
 import { cn } from 'clsx-tailwind-merge';
 
-function FormRow({ label, children, error, colspan }) {
+function FormRow({ label, children, error, colspan = 0 }) {
   return (
     <div
       className={cn('flex flex-col gap-2', {

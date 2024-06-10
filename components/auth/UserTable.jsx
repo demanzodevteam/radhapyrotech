@@ -9,11 +9,13 @@ import { TableUser } from '../table/TableUser';
 import { UserTableRow } from '../table/UserTableRow';
 
 function UserTable() {
-  const { data: { users, totalusers } = {}, isLoading = false } = useUsers();
+  const { data: { users = [], totalusers = 0 } = {}, isLoading = false } =
+    useUsers();
 
   // console.log(users, totalusers);
   if (isLoading) return <LoadingSpinner />;
-  if (users.length === 0) return <NotFound message='No Users Found' />;
+  if (users.length === 0 || users.length === undefined)
+    return <NotFound message='No Users Found' />;
   return (
     <TableUser count={totalusers}>
       <TableHeader>

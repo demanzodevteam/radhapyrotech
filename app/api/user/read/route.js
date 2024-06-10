@@ -2,7 +2,6 @@ import { prisma } from '@/config/db';
 import { NextResponse } from 'next/server';
 import { PAGE_SIZE } from '@/helpers/constants';
 
-
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
@@ -64,6 +63,7 @@ export async function GET(req) {
       { status: 200 }
     );
   } catch (error) {
+    // console.log(error);
     return NextResponse.json({ error: 'Failed Fetch Users' }, { status: 500 });
   }
 }

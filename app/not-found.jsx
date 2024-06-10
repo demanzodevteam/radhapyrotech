@@ -14,10 +14,10 @@ function Notfound() {
               The page you are looking for does not exist.
             </p>
             <Link
-              href='/'
-              className='bg-blue-700 hover:bg-blue-800 text-white font-bold py-4 px-6 rounded'
+              href='/dashboard'
+              className='bg-primary hover:bg-primary  hover:bg-opacity-90 text-white font-bold py-4 px-6 rounded'
             >
-              Go Home
+              Go Back
             </Link>
           </div>
         </div>

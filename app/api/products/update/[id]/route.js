@@ -10,9 +10,9 @@ export async function PUT(req, { params }) {
     const { id } = params;
 
     // Check if product image is a new image or old image
-    const image = formdata.get('product_image');
+    const image = await formdata.get('product_image');
 
-    const hasImagePath = image.startsWith?.(cloudinary_url);
+    const hasImagePath = typeof image === 'string' ? true : false;
 
     let imageUrl;
 
@@ -76,6 +76,7 @@ export async function PUT(req, { params }) {
 
     return NextResponse.json(res, { status: 200 });
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { error: "An error occurred: Can't update the item." },
       { status: 500 }

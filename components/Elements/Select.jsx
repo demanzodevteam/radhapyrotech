@@ -21,7 +21,7 @@ function Select({
       )}
       <select
         id={filterName}
-        className='px-3 appearance-auto text-[15px] capitalize outline-none py-[10px] rounded border border-gray-300 dark:border-gray-600 bg-gray-200 dark:bg-gray-900 shadow-sm'
+        className='px-3 appearance-auto text-[15px] capitalize outline-none py-3 rounded border border-gray-300 dark:border-gray-600 bg-gray-200 dark:bg-gray-900 shadow-sm'
         value={value}
         onChange={onChange}
       >

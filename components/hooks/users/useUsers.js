@@ -26,7 +26,9 @@ function useUsers() {
   const { data, isLoading } = useQuery({
     queryKey: [queryKeys.users, userPage, userbySearch, userShowEntries],
     queryFn: () => getUsers({ userPage, userbySearch, userShowEntries }),
-    throwOnError: (error) => toast.error(error.message),
+    throwOnError: (error) => {
+      toast.error(error.message);
+    },
   });
 
   const { totalusers = 0 } = data || {};
