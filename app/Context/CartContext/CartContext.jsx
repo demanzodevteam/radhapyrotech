@@ -34,6 +34,7 @@ export const CartProvider = ({ children }) => {
   }, [cart]);
 
   const addToCart = (product) => {
+    // console.log(`add tocart : ${JSON.stringify(product)}`);
     setCart((prevCart) => {
       const updatedCart = [...prevCart];
       const existingProductIndex = prevCart.findIndex(

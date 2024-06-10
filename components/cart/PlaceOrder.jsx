@@ -198,9 +198,15 @@ const PlaceOrder = () => {
             />
           </div>
         </div>
-        <div className="flex justify-center pt-8">
+        <div className="flex justify-start pt-8">
           <button
-            className="py-2 border-2 rounded-lg px-8"
+            className={`py-2 border-2 rounded-lg px-8 bg-primary ${
+              formdisabled
+                ? "cursor-not-allowed opacity-75"
+                : isSubmitting
+                ? "cursor-progress opacity-75"
+                : "cursor-default"
+            }`}
             disabled={isSubmitting || formdisabled}
             type="submit"
           >

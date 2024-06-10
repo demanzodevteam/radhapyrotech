@@ -1,5 +1,11 @@
+import WebsiteHeader from "@/components/websiteheader/WebsiteHeader";
+
 function Homepage() {
-  return <div className="text-center">home page</div>;
+  return (
+    <div>
+      <WebsiteHeader />
+    </div>
+  );
 }
 
 export default Homepage;

@@ -54,6 +54,7 @@ export const OrderFilterProvider = ({ children }) => {
     Cookies.remove("status");
     Cookies.remove("startDate");
     Cookies.remove("endDate");
+
     // window.location.href = "/dashboard/orders";
   };
 

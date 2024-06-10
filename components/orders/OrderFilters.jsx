@@ -23,7 +23,7 @@ const OrderFilter = () => {
             className=" border-2 px-4 focus:outline-none py-[0.53rem] rounded-md dark:text-inherit dark:bg-[#1f2937]  dark:placeholder-inherit"
             value={queryParam.status}
           >
-            <option value="select">Status</option>
+            <option value={null}>Status</option>
             <option value="pending">pending</option>
             <option value="confirmed">confirmed</option>
             <option value="cancelled">cancelled</option>
