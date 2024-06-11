@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html.body,
+:root {
+  height: 100%;
+}
+
 @layer base {
   html {
     font-family: 'var(--font-nunitoSans)', 'var(--font-notoSans)', sans-serif;
@@ -25,5 +30,18 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+/* tooltip */
+@layer components {
+  .tooltip {
+    @apply invisible absolute text-sm -bottom-6 rounded bg-white shadow-lg dark:bg-gray-900 dark:text-white px-1 -mt-8;
+  }
+  .has-tooltip {
+    @apply relative;
+  }
+  .has-tooltip:hover .tooltip {
+    @apply visible z-50;
   }
 }

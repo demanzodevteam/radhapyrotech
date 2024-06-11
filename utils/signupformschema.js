@@ -14,7 +14,7 @@ const signupSchema = z
       .regex(new RegExp('^[a-zA-Z]+$'), 'No Special Characters Allowed'),
     email: z.string().email('Please Enter the Valid Email Address'),
     role: z.enum(['Admin', 'Manager']),
-    image: z.any().optional(),
+    image: z.any(),
     password: z
       .string()
       .min(6, 'Password Must be 6 characters')

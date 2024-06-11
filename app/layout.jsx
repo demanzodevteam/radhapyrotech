@@ -1,23 +1,24 @@
-import './globals.css';
 import { NextAuthProvider } from '@/components/auth/NextAuthProvider';
 import { TanstackProvider } from '@/components/tanstack_provider/TanstackProvider';
-import { DarkModeProvider } from '@/darkmodecontext/DarkModeProvider';
-import { DashboardContextProvider } from '@/dashboardcontext/DashboardContextProvider';
 import { Noto_Sans, Nunito_Sans } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 import { CartProvider } from './Context/CartContext/CartContext';
-import { OrderFilterProvider } from './Context/OrderContext/OrderContextProvider';
+import './globals.css';
 
 const nunitoSans = Nunito_Sans({
   subsets: ['latin'],
   weight: ['200', '300', '400', '500', '600', '700', '800', '900', '1000'],
   variable: '--font-nunitoSans',
+  display: 'swap',
+  adjustFontFallback: false,
 });
 
 const notoSans = Noto_Sans({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   variable: '--font-notoSans',
+  display: 'swap',
+  adjustFontFallback: false,
 });
 
 export const metadata = {

@@ -2,8 +2,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import * as bcrypt from 'bcrypt';
 import NextAuth from 'next-auth';
 import { prisma } from '@/config/db';
-// import { PrismaClient } from '@prisma/client';
-// const prisma = new PrismaClient();
+
 export const authOptions = {
   pages: {
     signIn: '/login',
@@ -83,7 +82,9 @@ export const authOptions = {
       if (sessionUser) {
         session.user.id = sessionUser.id.toString();
         session.user.name = sessionUser.firstname.toString();
-        session.user.image = sessionUser.image.toString();
+        session.user.image = sessionUser.image
+          ? sessionUser.image.toString()
+          : null;
         session.user.role = sessionUser.role.toString();
       }
 

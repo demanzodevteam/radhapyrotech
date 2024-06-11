@@ -1,27 +1,28 @@
-import { prisma } from "@/config/db";
-import { NextResponse } from "next/server";
+import { prisma } from '@/config/db';
+import { revalidatePath } from 'next/cache';
+import { NextResponse } from 'next/server';
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const search = searchParams.get("search");
+    const search = searchParams.get('search');
     const status =
-      searchParams.get("status") !== undefined &&
-      searchParams.get("status") !== "select" &&
-      searchParams.get("status") !== ""
-        ? searchParams.get("status")
+      searchParams.get('status') !== undefined &&
+      searchParams.get('status') !== 'select' &&
+      searchParams.get('status') !== ''
+        ? searchParams.get('status')
         : undefined;
 
-    const startDate = searchParams.get("startDate")
-      ? new Date(searchParams.get("startDate"))
+    const startDate = searchParams.get('startDate')
+      ? new Date(searchParams.get('startDate'))
       : undefined;
-    const endDate = searchParams.get("endDate")
-      ? new Date(searchParams.get("endDate"))
+    const endDate = searchParams.get('endDate')
+      ? new Date(searchParams.get('endDate'))
       : undefined;
 
     // Pagination parameters
-    const page = parseInt(searchParams.get("page")) || 1; // Default page 1
-    const pageSize = parseInt(searchParams.get("pageSize")) || 10; // Default page size 10
+    const page = parseInt(searchParams.get('page')) || 1; // Default page 1
+    const pageSize = parseInt(searchParams.get('pageSize')) || 10; // Default page size 10
 
     const orders = await prisma.Order.findMany({
       where: {
@@ -37,7 +38,7 @@ export async function GET(request) {
         ],
       },
       orderBy: {
-        id: "desc",
+        id: 'desc',
       },
 
       skip: (page - 1) * pageSize,
@@ -73,8 +74,8 @@ export async function GET(request) {
       { data: orders, meta: metadata },
       {
         headers: {
-          "Content-Type": "application/json",
-          "API-Key": process.env.DATA_API_KEY,
+          'Content-Type': 'application/json',
+          'API-Key': process.env.DATA_API_KEY,
         },
       }
     );
@@ -108,29 +109,29 @@ export async function PUT(request) {
       status: 400,
     });
   }
-
+  revalidatePath('/dashboard');
   return new Response(
     JSON.stringify({
       status: 200,
-      message: "updated successfully",
+      message: 'updated successfully',
     })
   );
 }
 
 export async function POST(request) {
-
   try {
     const data = await request.json();
     const newOrder = await prisma.order.create({
       data: data,
     });
+    revalidatePath('/dashboard');
     return new Response(
-    JSON.stringify({
-      status: 200,
-      message: "Order Placed successfully",
-      data: newOrder,
-    })
-  );
+      JSON.stringify({
+        status: 200,
+        message: 'Order Placed successfully',
+        data: newOrder,
+      })
+    );
   } catch (error) {
     console.log(`post error: ${error.message}`);
     return new Response(`Webhook error: ${error.message}`, {
