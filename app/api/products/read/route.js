@@ -56,27 +56,37 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
 
     // pagination
-    const page = parseInt(searchParams.get('page'), 10) || 1;
+    const page = searchParams.get('page')
+      ? parseInt(searchParams.get('page'), 10)
+      : 1;
 
     // entries
-    const pageSizeParam = searchParams.get('entries') || PAGE_SIZE;
+    const pageSizeParam = searchParams.get('entries') || undefined;
+
+    // console.log(pageSizeParam);
+
     let pageSize;
     if (pageSizeParam === 'default') {
       pageSize = PAGE_SIZE;
     } else {
-      pageSize = parseInt(pageSizeParam) || PAGE_SIZE;
+      pageSize = parseInt(pageSizeParam, 10) || PAGE_SIZE;
     }
     const from = (page - 1) * pageSize ?? PAGE_SIZE;
 
     // category
-    const categoryName =
-      searchParams.get('category').replaceAll('-', ' ') || 'all';
+    const categoryName = searchParams?.get('category')
+      ? searchParams?.get('category')?.replaceAll('-', ' ')
+      : 'all';
 
     // status
-    const productStatus = searchParams.get('status') || 'all';
+    const productStatus = searchParams.get('status')
+      ? searchParams.get('status')
+      : 'all';
 
     // search
-    const searchValue = searchParams.get('search') || '';
+    const searchValue = searchParams.get('search')
+      ? searchParams.get('search')
+      : '';
 
     let where = {};
 
@@ -135,14 +145,17 @@ export async function GET(req) {
         product_categories: true,
       },
     });
+
     const count = await prisma.product.count({
       where: where,
     });
+
     return NextResponse.json(
       { data: res, totalProducts: count },
       { status: 200 }
     );
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { error: 'Failed To Fetch Products' },
       { status: 500 }

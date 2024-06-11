@@ -6,11 +6,18 @@ import Image from "next/image";
 import { ProductPagination } from "./ProductPagination";
 import { LoadingSpinner } from "../loadingspinner/LoadingSpinner";
 import { FaShoppingCart } from "react-icons/fa";
+import toast from "react-hot-toast";
+
 const ProductsGrid = () => {
   const { Data: { data: products = [], totalProducts = 0 } = {}, isLoading } =
     useProducts();
 
   const { addToCart } = useContext(CartContext);
+  const addCart = (product) => {
+    addToCart(product);
+    toast.success(`${product.product_name} added to cart`);
+  };
+
   if (isLoading) return <LoadingSpinner />;
   return (
     <div>
@@ -44,8 +51,8 @@ const ProductsGrid = () => {
                     </div>
                   </div>
                   <div className="col-span-1 flex justify-end px-2">
-                    <button onClick={() => addToCart(product)}>
-                      <FaShoppingCart className="text-2xl text-[#f4c008]" />
+                    <button onClick={() => addCart(product)}>
+                      <FaShoppingCart className="text-xl text-orange-500" />
                     </button>
                   </div>
                 </div>

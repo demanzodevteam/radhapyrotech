@@ -6,7 +6,7 @@ export async function getUserbyId(id) {
 
     const userId = await id;
 
-    const res = await fetch(`${api_url}/user/readbyId/${userId}`);
+    const res = await fetch(`${api_url}/user/readbyid/${userId}`);
 
     if (!res.ok) {
       const errorData = await res.json();

@@ -16,6 +16,7 @@ export function Pagination({ count }) {
     : Number(searchParams.get('page'));
 
   const pageSizeParam = searchParams.get('entries') || PAGE_SIZE;
+
   let pageSize;
   if (pageSizeParam === 'default') {
     pageSize = PAGE_SIZE;
@@ -54,11 +55,11 @@ export function Pagination({ count }) {
       <p className='space-x-1 font-medium text-sm text-gray-900 dark:text-white'>
         showing
         <span className='inline-block px-2 font-bold'>
-          {(currentPage - 1) * PAGE_SIZE + 1}
+          {(currentPage - 1) * pageSize + 1}
         </span>
         to
         <span className='inline-block pr-2 font-bold'>
-          {currentPage === pageCount ? count : currentPage * PAGE_SIZE}
+          {currentPage === pageCount ? count : currentPage * pageSize}
         </span>
         of <span className='inline-block pr-2 font-bold'>{count}</span>
         results
@@ -72,7 +73,7 @@ export function Pagination({ count }) {
         >
           <FaArrowLeft className='text-base' />
         </button>
-        <>
+        <div className='hidden md:inline-flex'>
           {totalPages.map((page) => (
             <button
               key={page}
@@ -84,7 +85,7 @@ export function Pagination({ count }) {
               {page}
             </button>
           ))}
-        </>
+        </div>
         <button
           onClick={nextPage}
           disabled={currentPage === pageCount}

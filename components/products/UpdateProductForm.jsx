@@ -229,7 +229,7 @@ function UpdateProductForm({ onCloseModal, productData }) {
             className='px-6 py-2 bg-primary hover:bg-primary hover:bg-opacity-90 rounded-md text-white text-base'
             type='submit'
           >
-            Update
+            {isPending ? 'Updating...' : 'Update'}
           </button>
         </div>
       </div>

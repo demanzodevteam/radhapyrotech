@@ -22,7 +22,9 @@ export function CategoryPagination({ count }) {
   } else {
     pageSize = parseInt(pageSizeParam) || PAGE_SIZE;
   }
+
   const pageCount = Math.ceil(count / pageSize);
+
   const totalPages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
   // actions
@@ -54,11 +56,11 @@ export function CategoryPagination({ count }) {
       <p className='space-x-1 font-medium text-sm text-gray-900 dark:text-white'>
         showing
         <span className='inline-block px-2 font-bold'>
-          {(currentPage - 1) * PAGE_SIZE + 1}
+          {(currentPage - 1) * pageSize + 1}
         </span>
         to
         <span className='inline-block pr-2 font-bold'>
-          {currentPage === pageCount ? count : currentPage * PAGE_SIZE}
+          {currentPage === pageCount ? count : currentPage * pageSize}
         </span>
         of <span className='inline-block pr-2 font-bold'>{count}</span>
         results
@@ -72,7 +74,7 @@ export function CategoryPagination({ count }) {
         >
           <FaArrowLeft className='text-base' />
         </button>
-        <>
+        <div className='hidden md:inline-flex'>
           {totalPages.map((page) => (
             <button
               key={page}
@@ -84,7 +86,7 @@ export function CategoryPagination({ count }) {
               {page}
             </button>
           ))}
-        </>
+        </div>
         <button
           onClick={nextPage}
           disabled={currentPage === pageCount}

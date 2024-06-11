@@ -6,7 +6,6 @@ import { DeleteUser } from '../auth/DeleteUser';
 import { HiPencilAlt } from 'react-icons/hi';
 import Link from 'next/link';
 function UserTableRow({ data = {} }) {
-  // console.log(data);
   const { id: userId, firstname, lastname, email, image, role } = data;
   return (
     <tr className='text-gray-900 font-medium text-sm dark:text-white'>
@@ -20,7 +19,7 @@ function UserTableRow({ data = {} }) {
               priority={true}
               width={0}
               height={0}
-              sizes='100vw'
+              sizes='100%'
               alt={`${firstname}-${lastname}`}
             />
           </div>

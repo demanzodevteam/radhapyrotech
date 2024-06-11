@@ -1,11 +1,11 @@
-'use client';
-
 import { CategorySearch } from '@/components/filters/categories/CategorySearch';
 import { CategoryShowEntriesFilter } from '@/components/filters/categories/CategoryShowEntriesFilter';
+import { LoadingSpinner } from '@/components/loadingspinner/LoadingSpinner';
 import { CategoryTable } from '@/components/productcategories/CategoryTable';
 import { CreateCategory } from '@/components/productcategories/CreateCategory';
 import { CategoryTableFiltersWrapper } from '@/components/tablefilters/CategoryTableFiltersWrapper';
 import { TableOperations } from '@/components/tableoperations/TableOperations';
+import { Suspense } from 'react';
 
 function CategoriesPage() {
   return (
@@ -18,7 +18,9 @@ function CategoriesPage() {
           <CreateCategory />
         </CategoryTableFiltersWrapper>
       </TableOperations>
-      <CategoryTable />
+      <Suspense fallback={<LoadingSpinner />}>
+        <CategoryTable />
+      </Suspense>
     </div>
   );
 }

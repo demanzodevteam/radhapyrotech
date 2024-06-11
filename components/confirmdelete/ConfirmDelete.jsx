@@ -20,7 +20,7 @@ function ConfirmDelete({ resource, onConfirm, disabled, onCloseModal }) {
           onClick={onConfirm}
           disabled={disabled}
         >
-          Delete
+          {disabled ? 'Deleting...' : ' Delete'}
         </button>
       </div>
     </div>

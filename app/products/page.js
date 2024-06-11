@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer/Footer";
 import ProductsGrid from "@/components/ProductsPage/ProductsGrid";
 import { LoadingSpinner } from "@/components/loadingspinner/LoadingSpinner";
 import WebsiteHeader from "@/components/websiteheader/WebsiteHeader";
@@ -15,6 +16,7 @@ export default function Products() {
           <ProductsGrid />
         </Suspense>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -73,7 +73,7 @@ function UpdateCategoryForm({ onCloseModal, updateCategory }) {
             type='submit'
             disabled={isPending}
           >
-            Update
+            {isPending ? 'Updating...' : 'Update'}
           </button>
         </div>
       </form>

@@ -1,3 +1,5 @@
+import { UsersPagination } from '../pagination/users/usersPagination';
+
 export function TableUser({ children, count = 0 }) {
   return (
     <section className='container mx-auto '>
@@ -6,7 +8,7 @@ export function TableUser({ children, count = 0 }) {
           <table className='w-full bg-white dark:bg-gray-800'>{children}</table>
         </div>
       </div>
-      {/* <CategoryPagination count={count} /> */}
+      <UsersPagination count={count} />
     </section>
   );
 }

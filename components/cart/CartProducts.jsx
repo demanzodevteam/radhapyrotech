@@ -4,6 +4,7 @@ import { useContext } from "react";
 import Image from "next/image";
 import { IoIosCloseCircle } from "react-icons/io";
 import Notfound from "@/app/not-found";
+import Link from "next/link";
 
 const multiplyAndRound = (price, quantity) => {
   const product = price * quantity;
@@ -24,7 +25,15 @@ const CartProduct = () => {
   return (
     <div className="col-span-3 flex flex-col gap-4">
       {cart.length < 1 && (
-        <div className="text-center border-l p-4">No Products in your cart</div>
+        <div className="text-center border-l p-4">
+          <p className="mb-4">No Products in your cart</p>
+          <Link
+            href="/products"
+            className="text-white bg-primary p-2 rounded-lg"
+          >
+            Go to Products
+          </Link>
+        </div>
       )}
       {cart.map((product) => {
         return (

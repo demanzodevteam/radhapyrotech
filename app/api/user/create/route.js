@@ -1,9 +1,8 @@
-// import { prisma } from '@/config/db';
+import { prisma } from '@/config/db';
 import { NextResponse } from 'next/server';
 import * as bcrypt from 'bcrypt';
 import cloudinary from '@/config/cloudinary';
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+
 export async function POST(request) {
   try {
     const formdata = await request.formData();
