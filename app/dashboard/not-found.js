@@ -9,12 +9,12 @@ function Notfound() {
             <FaExclamationTriangle className='text-8xl text-red-600' />
           </div>
           <div className='text-center'>
-            <h1 className='text-3xl font-bold mt-4 mb-2'>Page Not Found</h1>
+            <h1 className='text-3xl font-bold mt-4 mb-2'>Not Found</h1>
             <p className='text-gray-500 text-xl mb-10'>
-              The page you are looking for does not exist.
+              Could not find requested resource
             </p>
             <Link
-              href='/'
+              href='/dashboard'
               className='bg-primary hover:bg-primary  hover:bg-opacity-90 text-white font-bold py-4 px-6 rounded'
             >
               Go Back

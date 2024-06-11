@@ -1,5 +1,6 @@
 'use client';
 
+import defaultProfileImage from '@/assets/profile.png';
 import { useDashboardContext } from '@/dashboardcontext/useDashboardContext';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -8,8 +9,9 @@ import { GoBellFill } from 'react-icons/go';
 import { HiOutlineArrowRightStartOnRectangle } from 'react-icons/hi2';
 import { IoMenu } from 'react-icons/io5';
 import DarkModeToggleBtn from '../darkmodetoggle/DarkModeToggleBtn';
+
 import { DashboardMobileMenu } from '../sidebar/DashboardMobileMenu';
-import defaultProfileImage from '@/assets/profile.png';
+import { useUserbyId } from '../hooks/users/useUserbyId';
 function Header() {
   const {
     showSidebar,
@@ -21,8 +23,12 @@ function Header() {
   } = useDashboardContext();
 
   const { data: session, status } = useSession();
-  const { image, name, id } = session?.user ?? {};
-  console.log(id);
+  const { name, id } = session?.user ?? {};
+  const { user } = useUserbyId();
+  const { image = undefined } = user || {};
+  // console.log(image);
+  // console.log(isLoading);
+
   return (
     <>
       <header className=' bg-white dark:bg-gray-900 dark:text-white py-3 px-4 md:px-12 border-b border-solid border-gray-200 dark:border-gray-900 '>
@@ -57,15 +63,16 @@ function Header() {
           </div>
           <div>
             <ul className='flex items-center gap-6 text-2xl'>
-              <li>
+              <li className='has-tooltip'>
+                <span className='tooltip'>Profile</span>
                 <Link href={`/dashboard/profile/${id}`}>
-                  <div className='w-10 h-10 relative'>
+                  <div className='w-9 h-9 relative'>
                     <Image
                       src={image ?? defaultProfileImage}
                       alt={name}
                       width={0}
                       height={0}
-                      sizes='100vw'
+                      sizes='100%'
                       fill
                       priority
                       className='object-cover rounded-full'
@@ -73,13 +80,15 @@ function Header() {
                   </div>
                 </Link>
               </li>
-              <li>
+              <li className='has-tooltip py-1'>
+                <span className='tooltip'>Logout</span>
                 <HiOutlineArrowRightStartOnRectangle
                   onClick={() => signOut()}
                   className='cursor-pointer'
                 />
               </li>
-              <li>
+              <li className='has-tooltip py-1'>
+                <span className='tooltip'>Alarms</span>
                 <GoBellFill />
               </li>
               <li className='flex flex-col items-end'>

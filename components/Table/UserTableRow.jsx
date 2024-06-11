@@ -31,7 +31,7 @@ function UserTableRow({ data = {} }) {
       </td>
       <td className='px-4 py-2  border border-gray-300 dark:border-gray-600'>
         <span
-          className={cn('px-3 py-1 rounded-lg bg-gray-500', {
+          className={cn('px-3 py-1 text-white rounded-lg bg-gray-500', {
             'bg-green-500': role === 'Admin',
             'bg-primary': role === 'Manager',
           })}

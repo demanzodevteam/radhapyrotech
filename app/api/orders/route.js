@@ -1,4 +1,5 @@
 import { prisma } from "@/config/db";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function GET(request) {
@@ -108,7 +109,7 @@ export async function PUT(request) {
       status: 400,
     });
   }
-
+  revalidatePath("/dashboard");
   return new Response(
     JSON.stringify({
       status: 200,
@@ -123,6 +124,7 @@ export async function POST(request) {
     const newOrder = await prisma.order.create({
       data: data,
     });
+    revalidatePath("/dashboard");
     return new Response(
       JSON.stringify({
         status: 200,

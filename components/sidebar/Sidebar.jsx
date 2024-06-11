@@ -2,6 +2,8 @@
 import { useDashboardContext } from '@/dashboardcontext/useDashboardContext';
 import Logo from './Logo';
 import NavMenus from './NavMenus';
+import { HiOutlineArrowRightStartOnRectangle } from 'react-icons/hi2';
+import { signOut } from 'next-auth/react';
 
 function Sidebar() {
   const { showSidebar } = useDashboardContext();
@@ -13,6 +15,13 @@ function Sidebar() {
     >
       <Logo href='/dashboard' />
       <NavMenus />
+      <button
+        onClick={() => signOut()}
+        className='bg-primary flex justify-center items-center gap-x-2 mt-auto hover:bg-primary text-lg  hover:bg-opacity-90 text-white font-bold py-2 px-6 rounded'
+      >
+        <HiOutlineArrowRightStartOnRectangle />
+        Logout
+      </button>
     </aside>
   );
 }

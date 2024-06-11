@@ -13,7 +13,7 @@ function useUpdateuserdetails() {
     onSuccess: () => {
       toast.success('User details updated successfully');
       queryClient.invalidateQueries({
-        queryKey: [queryKeys.user, userId],
+        queryKey: [queryKeys.user,userId],
       });
     },
     onError: (error) => {

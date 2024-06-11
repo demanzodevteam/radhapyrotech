@@ -4,7 +4,12 @@ import { TbCategoryPlus } from 'react-icons/tb';
 import { FaLayerGroup } from 'react-icons/fa6';
 import { FaUsersGear } from 'react-icons/fa6';
 import { FaCalendarAlt } from 'react-icons/fa';
+import { useSession } from 'next-auth/react';
+
 function NavMenus() {
+  // const session = getServerSession(authOptions);
+  const { data } = useSession();
+  const { role } = data?.user ?? {};
   return (
     <ul className='flex flex-col gap-8 dark:text-white'>
       <Navlink icon={<BsHouseDashFill />} href='/dashboard'>
@@ -19,9 +24,11 @@ function NavMenus() {
       <Navlink icon={<FaCalendarAlt />} href='/dashboard/orders'>
         Orders
       </Navlink>
-      <Navlink icon={<FaUsersGear />} href='/dashboard/users'>
-        Users
-      </Navlink>
+      {role === 'Admin' && (
+        <Navlink icon={<FaUsersGear />} href='/dashboard/users'>
+          Users
+        </Navlink>
+      )}
     </ul>
   );
 }
