@@ -8,7 +8,7 @@ export async function GET(request) {
     const search = searchParams.get("search");
     const status =
       searchParams.get("status") !== undefined &&
-      searchParams.get("status") !== "select" &&
+      searchParams.get("status") !== "Status" &&
       searchParams.get("status") !== ""
         ? searchParams.get("status")
         : undefined;
