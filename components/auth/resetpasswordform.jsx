@@ -42,7 +42,9 @@ function Resetpasswordform({ userId }) {
       }
       router.push(`/login`);
       toast.success(res.success);
+      reset();
     } catch (error) {
+      reset();
       toast.error(error.message);
     }
   }

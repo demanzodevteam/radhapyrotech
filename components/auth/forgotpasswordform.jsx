@@ -32,7 +32,9 @@ function Forgotpasswordform() {
       }
       router.push(`/resetpassword/${res.userId}`);
       toast.success(res.success);
+      reset();
     } catch (error) {
+      reset();
       toast.error(error.message);
     }
   }

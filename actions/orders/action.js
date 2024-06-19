@@ -1,19 +1,18 @@
 'use server';
 
-// import { prisma } from '@/config/db';
+import { prisma } from '@/config/db';
 import { subDays } from 'date-fns';
+import { revalidatePath } from 'next/cache';
 
-import { PrismaClient } from '@prisma/client';
-import { getToday } from '@/helpers/dataformats';
-const prisma = new PrismaClient();
+// import { PrismaClient } from '@prisma/client';
+// const prisma = new PrismaClient();
 
 export async function getordersstats(days) {
   try {
     // total orders count
     const numofdays = await days;
 
-    const queryDate = subDays(new Date(), numofdays);
-    console.log(queryDate);
+    const queryDate = subDays(new Date(), numofdays); // 7 ,30 , 90
 
     const totalCount = await prisma.order.count({
       where: {
@@ -25,20 +24,28 @@ export async function getordersstats(days) {
           },
           {
             order_date: {
-              gte: queryDate,
+              lte: new Date(),
             },
           },
         ],
       },
     });
 
-    console.log('lll');
-
-    console.log(totalCount);
-
     const pendingCount = await prisma.order.count({
       where: {
         status: 'pending',
+        AND: [
+          {
+            order_date: {
+              gte: queryDate,
+            },
+          },
+          {
+            order_date: {
+              lte: new Date(),
+            },
+          },
+        ],
       },
     });
 
@@ -46,6 +53,18 @@ export async function getordersstats(days) {
     const confirmordersCount = await prisma.order.count({
       where: {
         status: 'confirmed',
+        AND: [
+          {
+            order_date: {
+              gte: queryDate,
+            },
+          },
+          {
+            order_date: {
+              lte: new Date(),
+            },
+          },
+        ],
       },
     });
 
@@ -53,14 +72,57 @@ export async function getordersstats(days) {
     const canceledordersCount = await prisma.order.count({
       where: {
         status: 'cancelled',
+        AND: [
+          {
+            order_date: {
+              gte: queryDate,
+            },
+          },
+          {
+            order_date: {
+              lte: new Date(),
+            },
+          },
+        ],
       },
     });
+
+    // for  sales chart
+    const totalrecentorders = await prisma.order.findMany({
+      where: {
+        status: 'confirmed',
+        AND: [
+          {
+            order_date: {
+              gte: queryDate,
+            },
+          },
+          {
+            order_date: {
+              lte: new Date(),
+            },
+          },
+        ],
+      },
+      select: {
+        total_price: true,
+        order_date: true,
+      },
+    });
+
+    // console.log(totalrecentorders);
+
+    revalidatePath('/dashboard');
 
     return {
       totalordersCount: totalCount,
       pendingordersCount: pendingCount,
       confirmordersCount: confirmordersCount,
       canceledordersCount: canceledordersCount,
+      totalrecentorders: {
+        orders: totalrecentorders,
+        numofdays,
+      },
     };
   } catch (error) {
     return {
@@ -68,6 +130,7 @@ export async function getordersstats(days) {
       pendingordersCount: 0,
       confirmordersCount: 0,
       canceledordersCount: 0,
+      totalrecentorders: {},
     };
   }
 }
