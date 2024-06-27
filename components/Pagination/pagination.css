@@ -1,0 +1,36 @@
+.pagination-button {
+  margin: 0px 3px 0px 3px;
+  width: 2.3rem;
+  border-width: 2px;
+  border-radius: 5px;
+  padding: 5px;
+  border: solid;
+  border-color: #000000;
+}
+.default-button {
+  margin: 0px 3px 0px 3px;
+  width: 5.3rem;
+  border-width: 2px;
+  border-radius: 5px;
+  padding: 5px;
+  border: solid;
+  border-color: #000000;
+}
+
+.active-page {
+  border-color: #64748b;
+  background-color: #64748b;
+  color: #ffffff;
+}
+
+.disabled-button {
+  margin: 0px 3px 0px 3px;
+  width: 5.3rem;
+  border-width: 2px;
+  border-radius: 5px;
+  padding: 5px;
+  border: solid;
+  border-color: #64748b;
+  color: #64748b;
+  opacity: 0.5;
+}

@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html.body,
+:root {
+  height: 100%;
+}
+
+@layer base {
+  html {
+    font-family: 'var(--font-nunitoSans)', 'var(--font-notoSans)', sans-serif;
+  }
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* tooltip */
+@layer components {
+  .tooltip {
+    @apply invisible absolute text-sm -bottom-6 rounded bg-white shadow-lg dark:bg-gray-900 dark:text-white px-1 -mt-8;
+  }
+  .has-tooltip {
+    @apply relative;
+  }
+  .has-tooltip:hover .tooltip {
+    @apply visible z-50;
+  }
+}
